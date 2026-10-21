@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mis XV Años</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Pinyon+Script&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff7f8;--panel:#ffffff;--ink:#7b6164;--rose:#ce8e97;--soft:#ffecef;--gold:#b8923f;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#2a1d21;--panel:#35252a;--ink:#f1dde0;--rose:#e0a3ac;--soft:#412c32;--gold:#d9b66a}}
+:root[data-theme="dark"]{--bg:#2a1d21;--panel:#35252a;--ink:#f1dde0;--rose:#e0a3ac;--soft:#412c32;--gold:#d9b66a}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Cormorant Garamond',Georgia,serif;font-size:1.25rem;line-height:1.55;text-align:center}
+section{max-width:560px;margin:0 auto;padding:4.5rem 1.6rem}
+h2{font-family:'Pinyon Script','Snell Roundhand',cursive;font-weight:400;font-size:2.8rem;line-height:1.1;margin:0 0 1rem;color:var(--rose)}
+p{margin:.4rem 0}
+.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative;overflow:hidden;
+background:radial-gradient(ellipse at 20% 10%,var(--soft),transparent 55%),radial-gradient(ellipse at 90% 90%,var(--soft),transparent 50%)}
+.hero .xv{font-family:'Pinyon Script',cursive;font-size:clamp(7rem,32vw,12rem);line-height:.9;color:var(--rose);margin:0}
+.hero .anos{letter-spacing:.5em;margin:.2rem 0 1.4rem;font-size:1.1rem}
+.hero .nombre{font-family:'Pinyon Script',cursive;font-size:clamp(2.6rem,11vw,4rem);margin:0;color:var(--ink)}
+.hero .hint{position:absolute;bottom:calc(1.6rem + env(safe-area-inset-bottom,0px));font-style:italic;font-size:1rem;opacity:.8}
+.petal{position:absolute;width:120px;height:120px;border-radius:60% 40% 60% 40%;background:var(--rose);opacity:.14}
+.p1{top:-30px;left:-30px}.p2{bottom:60px;right:-40px;width:160px;height:160px}
+button,.btn{font:inherit;cursor:pointer;display:inline-block;border:1.5px solid var(--rose);background:transparent;color:var(--ink);padding:.55rem 1.6rem;border-radius:999px;text-decoration:none;font-size:1.1rem}
+button:hover,.btn:hover{background:var(--rose);color:#fff}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.music{padding:1.5rem}
+.frame{background:var(--panel);border:1px solid var(--soft);border-radius:4px;padding:2rem 1.4rem;box-shadow:0 10px 40px -18px var(--rose)}
+.padres b{display:block;font-weight:600;font-size:1.3rem}
+.fecha{display:flex;justify-content:center;align-items:baseline;gap:1.2rem;margin:1rem 0}
+.fecha .dia{font-size:5rem;line-height:1;color:var(--gold)}
+.fecha div{font-size:1.2rem;text-align:left}
+.count{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;margin-top:1.4rem}
+.count div{background:var(--panel);border:1px solid var(--soft);border-radius:6px;padding:.7rem 0}
+.count strong{display:block;font-size:2rem;font-weight:600;color:var(--rose)}
+.count span{font-size:.9rem}
+.evento{margin:1.6rem 0}
+.evento .hora{font-size:1.8rem;color:var(--gold);margin:.3rem 0 .8rem}
+.galeria{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
+.galeria figure{margin:0;aspect-ratio:3/4;border-radius:4px;overflow:hidden;background:var(--soft);display:flex;align-items:center;justify-content:center;font-style:italic;font-size:1rem;padding:.5rem}
+.galeria img{width:100%;height:100%;object-fit:cover;display:block}
+.galeria figure:nth-child(odd){transform:translateY(1.2rem)}
+.aviso{font-size:1.05rem;font-style:italic}
+footer{padding:2rem 1rem 3rem;font-size:1rem;opacity:.8}
+@media (prefers-reduced-motion:no-preference){.hero .xv{animation:in 1.4s ease-out both}@keyframes in{from{opacity:0;letter-spacing:.2em}to{opacity:1}}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <span class="petal p1"></span><span class="petal p2"></span>
+  <p class="xv">XV</p>
+  <p class="anos">AÑOS</p>
+  <p class="nombre" id="nombre"></p>
+  <p class="hint">Desliza para ver la invitación</p>
+</header>
+
+<section class="music">
+  <button id="musica" type="button">♪ Reproducir música</button>
+  <audio id="audio" loop preload="none"></audio>
+</section>
+
+<section class="padres">
+  <h2>Mis padres</h2>
+  <p><b id="madre"></b><b id="padre"></b></p>
+  <p style="margin-top:2rem">Como una página de un cuento de hadas,<br>¡el sueño finalmente se hace realidad!<br>Con la bendición de Dios y el amor de mi familia, tenemos el honor de invitarlos a este día tan especial.</p>
+</section>
+
+<section>
+  <h2>Contando los días</h2>
+  <div class="fecha"><span class="dia" id="dia"></span><div id="fechaTxt"></div></div>
+  <div class="count" id="count"></div>
+</section>
+
+<section>
+  <div class="evento frame">
+    <h2>Ceremonia</h2>
+    <p id="cerLugar"></p>
+    <p class="hora" id="cerHora"></p>
+    <a class="btn" id="cerMapa" target="_blank" rel="noopener">Ver ubicación</a>
+  </div>
+  <div class="evento frame">
+    <h2>Recepción</h2>
+    <p id="recLugar"></p>
+    <p class="hora" id="recHora"></p>
+    <a class="btn" id="recMapa" target="_blank" rel="noopener">Ver ubicación</a>
+  </div>
+</section>
+
+<section>
+  <h2>Momentos</h2>
+  <div class="galeria" id="galeria"></div>
+</section>
+
+<section>
+  <h2>Código de vestimenta</h2>
+  <p id="vestimenta"></p>
+</section>
+
+<section>
+  <h2>Lluvia de sobres</h2>
+  <p>Mi mejor regalo es que puedas compartir conmigo este gran día. Pero si tu deseo es hacer un obsequio, sugiero un sobre con tu cariño.</p>
+</section>
+
+<section>
+  <h2>Confirma tu asistencia</h2>
+  <p>Para que este evento sea aún más perfecto, ayúdanos dando tu respuesta.</p>
+  <p style="margin-top:1.2rem"><a class="btn" id="confirmar" target="_blank" rel="noopener">Confirmar por WhatsApp</a></p>
+  <p style="margin-top:2.5rem">¡Esperamos contar con su presencia!</p>
+</section>
+
+<section>
+  <p class="aviso" id="aviso"></p>
+</section>
+<footer>XV años · <span id="pie"></span></footer>
+
+<script>
+/* ====== EDITA SOLO ESTA PARTE ====== */
+const D = {
+  nombre: "Mariana Guadalupe Bolaina Hernández",
+  madre: "Alondra",
+  padre: "DAvid",
+  fecha: "2026-12-28T19:00:00",          // fecha y hora de la ceremonia (AAAA-MM-DDTHH:MM)
+  ceremonia: { lugar: "Parroquia de San Rafael", hora: "7:00 p. m.", mapa: "Fracc. Carrizal, Villahermosa, Tabasco" },
+  recepcion: { lugar: "Salón de Eventos Fun City", hora: "8:00 p. m.", mapa: "Salón de Eventos " },
+  vestimenta: "Etiqueta. Se reserva el color rosa para la quinceañera.",
+  whatsapp: "9931328555",                          // ej. 5219931234567 (con lada del país)
+  aviso: "Les agradecemos que mantengan a los niños sentados y bajo su supervisión durante toda la fiesta.",
+  fotos: ["foto1.jpg","foto2.jpg","foto3.jpg"],                             // aquí van las fotos (ruta o data URI)
+  musica: "musica.mp3"                             // archivo de audio mp3 (ruta o data URI)
+};
+/* =================================== */
+const $=id=>document.getElementById(id);
+$('nombre').textContent=D.nombre; $('madre').textContent=D.madre; $('padre').textContent=D.padre;
+$('pie').textContent=D.nombre; document.title='XV Años '+D.nombre; $('aviso').textContent=D.aviso;
+$('vestimenta').textContent=D.vestimenta;
+$('cerLugar').textContent=D.ceremonia.lugar; $('cerHora').textContent=D.ceremonia.hora;
+$('recLugar').textContent=D.recepcion.lugar; $('recHora').textContent=D.recepcion.hora;
+const maps=q=>'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q);
+$('cerMapa').href=maps(D.ceremonia.mapa); $('recMapa').href=maps(D.recepcion.mapa);
+const f=new Date(D.fecha);
+$('dia').textContent=f.getDate();
+const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
+$('fechaTxt').innerHTML=cap(f.toLocaleDateString('es-MX',{weekday:'long'}))+'<br>'+cap(f.toLocaleDateString('es-MX',{month:'long'}))+'<br>'+f.getFullYear();
+const w=$('confirmar');
+if(D.whatsapp){w.href='https://wa.me/'+D.whatsapp+'?text='+encodeURIComponent('Hola, confirmo mi asistencia a los XV años de '+D.nombre+'.')}else{w.removeAttribute('href');w.style.opacity=.5;w.title='Falta agregar el número de WhatsApp'}
+const g=$('galeria');
+for(let i=0;i<4;i++){const fig=document.createElement('figure');
+  if(D.fotos[i]){const im=new Image();im.src=D.fotos[i];im.alt='Foto '+(i+1);fig.appendChild(im)}else{fig.textContent='Tu foto aquí'}
+  g.appendChild(fig)}
+const labels=['Días','Horas','Minutos','Segundos'];
+$('count').innerHTML=labels.map(l=>'<div><strong>0</strong><span>'+l+'</span></div>').join('');
+function tick(){let s=Math.max(0,Math.floor((f-new Date())/1000));
+  const v=[Math.floor(s/86400),Math.floor(s%86400/3600),Math.floor(s%3600/60),s%60];
+  document.querySelectorAll('#count strong').forEach((e,i)=>e.textContent=String(v[i]).padStart(2,'0'))}
+tick();setInterval(tick,1000);
+const a=$('audio'),b=$('musica');
+if(D.musica){a.src=D.musica;b.onclick=()=>{if(a.paused){a.play();b.textContent='❚❚ Pausar música'}else{a.pause();b.textContent='♪ Reproducir música'}}}
+else{b.onclick=()=>{b.textContent='Falta agregar la canción'}}
+</script>
+</body>
+</html>
