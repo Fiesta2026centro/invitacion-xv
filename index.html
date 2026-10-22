@@ -81,6 +81,30 @@ section{position:relative;isolation:isolate;text-shadow:0 1px 8px rgba(10,18,40,
 .s-polvo::after{bottom:0;left:50%;width:min(130vw,760px);aspect-ratio:2/1;transform:translateX(-50%) scaleY(-1);opacity:.55;background-image:url(imagenes/polvo-rosa.webp)}
 .s-ramas::before{top:.5rem;right:-30px;width:130px;aspect-ratio:360/533;transform:scaleX(-1);background-image:url(imagenes/rama.webp)}
 .s-ramas::after{bottom:.5rem;left:-30px;width:130px;aspect-ratio:360/533;background-image:url(imagenes/rama.webp)}
+
+/* Ventana de confirmación */
+dialog{background:var(--panel);color:var(--ink);border:1px solid var(--gold);border-radius:16px;padding:1.6rem 1.4rem 1.4rem;width:min(92vw,460px);max-height:90svh;overflow:auto;text-align:left;text-shadow:none;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+dialog::backdrop{background:rgba(5,10,25,.72)}
+dialog h2{text-align:center;font-size:2.3rem}
+dialog label{display:block;margin:.9rem 0 .3rem;font-size:1.05rem}
+dialog input[type=text],dialog textarea,dialog select{width:100%;font:inherit;font-size:1.1rem;color:var(--ink);background:var(--bg);border:1px solid rgba(255,255,255,.35);border-radius:10px;padding:.65rem .8rem}
+dialog textarea{resize:vertical}
+dialog fieldset{border:0;padding:0;margin:.9rem 0 0}
+dialog legend{padding:0;font-size:1.05rem}
+.opts{display:grid;gap:.5rem;margin-top:.4rem}
+.opts label{display:flex;align-items:center;gap:.6rem;margin:0;border:1px solid rgba(255,255,255,.3);border-radius:10px;padding:.65rem .8rem;cursor:pointer}
+.opts input{accent-color:var(--gold);width:1.2rem;height:1.2rem;margin:0}
+.opts label:has(input:checked){border-color:var(--gold);background:var(--soft)}
+#enviar,#ok{width:100%;margin-top:1.2rem}
+#st{color:#ffb4b4;font-size:1rem;margin:.8rem 0 0;text-align:center}
+#gracias{text-align:center}
+.x{position:absolute;top:.4rem;right:.6rem;width:2.4rem;height:2.4rem;padding:0;border-radius:50%;background:transparent;border:0;color:var(--ink);font-size:1.8rem;line-height:1}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+/* En pantallas anchas, los adornos se difuminan en los bordes */
+@media (min-width:700px){
+.s-flores::before,.s-flores::after,.s-eventos::before,.s-eventos::after,.s-polvo::before,.s-polvo::after{
+-webkit-mask-image:linear-gradient(to right,transparent,#000 14%,#000 86%,transparent),linear-gradient(to bottom,transparent,#000 14%,#000 86%,transparent);
+-webkit-mask-composite:source-in;mask-image:linear-gradient(to right,transparent,#000 14%,#000 86%,transparent),linear-gradient(to bottom,transparent,#000 14%,#000 86%,transparent);mask-composite:intersect}}
 @media (prefers-reduced-motion:no-preference){.hero .xv{animation:in 1.4s ease-out both}@keyframes in{from{opacity:0;letter-spacing:.2em}to{opacity:1}}}
 </style>
 </head>
@@ -164,6 +188,36 @@ section{position:relative;isolation:isolate;text-shadow:0 1px 8px rgba(10,18,40,
 </section>
 <footer>XV años · <span id="pie"></span></footer>
 
+<dialog id="dlg" aria-labelledby="dlgT">
+  <button type="button" class="x" id="cerrar" aria-label="Cerrar">×</button>
+  <form id="frm" autocomplete="off">
+    <h2 id="dlgT">Confirma tu asistencia</h2>
+    <label for="invitados">Nombre(s) de los invitados</label>
+    <textarea id="invitados" name="invitados" rows="2" required placeholder="Ej. Juan Pérez y Ana López"></textarea>
+    <fieldset>
+      <legend>¿Asistirán?</legend>
+      <div class="opts">
+        <label><input type="radio" name="asistencia" value="Sí asistiremos" required> Sí asistiremos</label>
+        <label><input type="radio" name="asistencia" value="No podremos asistir"> No podremos asistir</label>
+      </div>
+    </fieldset>
+    <div id="bloquePers">
+      <label for="personas">Cantidad de personas</label>
+      <select id="personas" name="personas" required><option value="" disabled selected>Elige…</option></select>
+    </div>
+    <label for="mensaje">Mensaje para la quinceañera (opcional)</label>
+    <textarea id="mensaje" name="mensaje" rows="2"></textarea>
+    <input class="hp" type="text" name="web" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <button type="submit" id="enviar">Enviar confirmación</button>
+    <p id="st" role="status"></p>
+  </form>
+  <div id="gracias" hidden>
+    <h2>¡Gracias!</h2>
+    <p id="grTxt"></p>
+    <button type="button" id="ok">Cerrar</button>
+  </div>
+</dialog>
+
 <script>
 /* ====== EDITA SOLO ESTA PARTE ====== */
 const D = {
@@ -175,7 +229,8 @@ const D = {
   recepcion: { lugar: "Salón de Eventos Fun City", hora: "8:00 p. m.", dir: "", mapa: "Salón de Eventos Fun City, Villahermosa, Tabasco" },
   vestimenta: "Etiqueta. Se reserva el color rosa para la quinceañera.",
   whatsapp: "9931328555",               // 10 dígitos; se agrega el 52 de México solo
-  formulario: "https://forms.gle/VL7KofBaTH2Hp6hN6",                        // enlace de tu Google Form (pégalo entre las comillas)
+  apiRsvp: "https://script.google.com/macros/s/AKfycbwThljD5Ip2dqJAfB4xc8or2h-CUBOSNHzIS63uHouoj6oPVs_l96Ln3UZZqiuqQm7f/exec",                           // URL de tu Apps Script (termina en /exec); guarda las confirmaciones en tu hoja
+  formulario: "",                        // enlace de tu Google Form (pégalo entre las comillas)
   aviso: "Les agradecemos que mantengan a los niños sentados y bajo su supervisión durante toda la fiesta.",
   portada: "fotos/foto1.jpg",            // foto de la portada ("" para dejarla sin foto)
   fotos: ["fotos/foto1.jpg","fotos/foto2.jpg","fotos/foto3.jpg"],   // galería "Momentos"
@@ -211,9 +266,38 @@ $('fechaTxt').innerHTML=cap(f.toLocaleDateString('es-MX',{weekday:'long'}))+'<br
 const w=$('confirmar');
 let n=(D.whatsapp||'').replace(/\D/g,'');if(n.length===10)n='52'+n;
 const wa=n?'https://wa.me/'+n+'?text='+encodeURIComponent('Hola, tengo una duda sobre los XV años de '+D.nombre+'.'):'';
-if(D.formulario){w.href=D.formulario;if(wa){$('waLink').href=wa}else{$('wa').remove()}}
-else if(wa){w.href='https://wa.me/'+n+'?text='+encodeURIComponent('Hola, confirmo mi asistencia a los XV años de '+D.nombre+'.');w.textContent='Confirmar por WhatsApp';$('wa').remove()}
-else{w.removeAttribute('href');w.style.opacity=.5;$('wa').remove()}
+const dlg=$('dlg'),frm=$('frm'),st=$('st'),sel=$('personas');
+function abrir(){frm.hidden=false;$('gracias').hidden=true;st.textContent='';
+  if(dlg.showModal){dlg.showModal()}else{dlg.setAttribute('open','')}}
+function cerrar(){if(dlg.close){dlg.close()}else{dlg.removeAttribute('open')}}
+if(D.apiRsvp||D.formulario){
+  if(wa){$('waLink').href=wa}else{$('wa').remove()}
+  if(D.apiRsvp){w.href='#';w.removeAttribute('target');w.addEventListener('click',e=>{e.preventDefault();abrir()})}
+  else{w.href=D.formulario}
+}else if(wa){
+  w.href='https://wa.me/'+n+'?text='+encodeURIComponent('Hola, confirmo mi asistencia a los XV años de '+D.nombre+'.');
+  w.textContent='Confirmar por WhatsApp';$('wa').remove()
+}else{w.removeAttribute('href');w.style.opacity=.5;$('wa').remove()}
+for(let i=1;i<=10;i++){sel.add(new Option(i+(i===1?' persona':' personas'),i))}
+$('cerrar').onclick=cerrar;$('ok').onclick=cerrar;
+dlg.addEventListener('click',e=>{if(e.target===dlg)cerrar()});
+frm.addEventListener('change',()=>{
+  const no=frm.asistencia.value==='No podremos asistir';
+  $('bloquePers').hidden=no;sel.required=!no});
+frm.addEventListener('submit',async e=>{
+  e.preventDefault();if(frm.web.value)return;
+  const btn=$('enviar');btn.disabled=true;btn.textContent='Enviando…';st.textContent='';
+  const fd=new URLSearchParams(new FormData(frm));
+  const no=fd.get('asistencia')==='No podremos asistir';if(no)fd.set('personas','0');
+  try{
+    const r=await fetch(D.apiRsvp,{method:'POST',body:fd});
+    const j=await r.json();if(!j.ok)throw new Error(j.error||'error');
+    $('grTxt').textContent=no?'Lamentamos que no puedan acompañarnos. Gracias por avisarnos.':'Tu confirmación quedó registrada. ¡Los esperamos!';
+    frm.hidden=true;$('gracias').hidden=false;frm.reset();$('bloquePers').hidden=false;sel.required=true;
+  }catch(err){
+    st.textContent='No se pudo enviar. Revisa tu conexión e inténtalo de nuevo, o escríbenos por WhatsApp.';
+  }
+  btn.disabled=false;btn.textContent='Enviar confirmación'});
 const g=$('galeria');
 for(let i=0;i<4;i++){const fig=document.createElement('figure');
   if(D.fotos[i]){const im=new Image();im.src=D.fotos[i];im.alt='Foto '+(i+1);fig.appendChild(im)}else{fig.textContent='Tu foto aquí'}
