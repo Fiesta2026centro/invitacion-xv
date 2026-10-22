@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Pinyon+Script&display=swap" rel="stylesheet">
 <style>
-:root{color-scheme:dark;--bg:#14213d;--panel:#1c2d54;--ink:#B8860B;--rose:#B28B06;--soft:#233862;--gold:#ffffff;
+:root{color-scheme:dark;--bg:#14213d;--panel:#1c2d54;--ink:#ffffff;--rose:#f1c3cb;--soft:#233862;--gold:#e0be72;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 *{box-sizing:border-box}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
@@ -154,7 +154,8 @@ section{position:relative;isolation:isolate;text-shadow:0 1px 8px rgba(10,18,40,
   <h2>Confirma tu asistencia</h2>
   <div class="media" id="mConf"></div>
   <p>Para que este evento sea aún más perfecto, ayúdanos dando tu respuesta.</p>
-  <p style="margin-top:1.2rem"><a class="btn" id="confirmar" target="_blank" rel="noopener">Confirmar por WhatsApp</a></p>
+  <p style="margin-top:1.2rem"><a class="btn" id="confirmar" target="_blank" rel="noopener">Confirmar asistencia</a></p>
+  <p id="wa" style="margin-top:1.1rem;font-size:1.05rem"><a id="waLink" target="_blank" rel="noopener" style="color:inherit">¿Dudas? Escríbenos por WhatsApp</a></p>
   <p style="margin-top:2.5rem">¡Esperamos contar con su presencia!</p>
 </section>
 
@@ -169,14 +170,15 @@ const D = {
   nombre: "Mariana Guadalupe Bolaina Hernández",
   madre: "Alondra",
   padre: "David",
-  fecha: "2026-12-26T19:00:00",          // fecha y hora de la ceremonia (AAAA-MM-DDTHH:MM)
+  fecha: "2026-12-28T19:00:00",          // fecha y hora de la ceremonia (AAAA-MM-DDTHH:MM)
   ceremonia: { lugar: "Parroquia de San Rafael", hora: "7:00 p. m.", dir: "Fracc. Carrizal, Villahermosa, Tabasco", mapa: "Parroquia de San Rafael, Fracc. Carrizal, Villahermosa, Tabasco" },
   recepcion: { lugar: "Salón de Eventos Fun City", hora: "8:00 p. m.", dir: "", mapa: "Salón de Eventos Fun City, Villahermosa, Tabasco" },
   vestimenta: "Etiqueta. Se reserva el color rosa para la quinceañera.",
   whatsapp: "9931328555",               // 10 dígitos; se agrega el 52 de México solo
+  formulario: "https://forms.gle/VL7KofBaTH2Hp6hN6",                        // enlace de tu Google Form (pégalo entre las comillas)
   aviso: "Les agradecemos que mantengan a los niños sentados y bajo su supervisión durante toda la fiesta.",
   portada: "fotos/foto1.jpg",            // foto de la portada ("" para dejarla sin foto)
-  fotos: ["fotos/foto1.jpg","fotos/foto2.jpg","fotos/foto3.jpg","fotos/foto4.jpg"],   // galería "Momentos"
+  fotos: ["fotos/foto1.jpg","fotos/foto2.jpg","fotos/foto3.jpg"],   // galería "Momentos"
   imgVestimenta: "",                     // foto para vestimenta; vacío = dibujo
   imgSobres: "",                         // foto para lluvia de sobres; vacío = dibujo
   imgConfirmar: "",                      // foto para confirmar asistencia; vacío = dibujo
@@ -207,9 +209,11 @@ const cuando=cap(f.toLocaleDateString('es-MX',{weekday:'long',day:'numeric',mont
 $('dia').textContent=f.getDate();
 $('fechaTxt').innerHTML=cap(f.toLocaleDateString('es-MX',{weekday:'long'}))+'<br>'+cap(f.toLocaleDateString('es-MX',{month:'long'}))+'<br>'+f.getFullYear();
 const w=$('confirmar');
-if(D.whatsapp){let n=D.whatsapp.replace(/\D/g,'');if(n.length===10)n='52'+n;
-  w.href='https://wa.me/'+n+'?text='+encodeURIComponent('Hola, confirmo mi asistencia a los XV años de '+D.nombre+'.')}
-else{w.removeAttribute('href');w.style.opacity=.5}
+let n=(D.whatsapp||'').replace(/\D/g,'');if(n.length===10)n='52'+n;
+const wa=n?'https://wa.me/'+n+'?text='+encodeURIComponent('Hola, tengo una duda sobre los XV años de '+D.nombre+'.'):'';
+if(D.formulario){w.href=D.formulario;if(wa){$('waLink').href=wa}else{$('wa').remove()}}
+else if(wa){w.href='https://wa.me/'+n+'?text='+encodeURIComponent('Hola, confirmo mi asistencia a los XV años de '+D.nombre+'.');w.textContent='Confirmar por WhatsApp';$('wa').remove()}
+else{w.removeAttribute('href');w.style.opacity=.5;$('wa').remove()}
 const g=$('galeria');
 for(let i=0;i<4;i++){const fig=document.createElement('figure');
   if(D.fotos[i]){const im=new Image();im.src=D.fotos[i];im.alt='Foto '+(i+1);fig.appendChild(im)}else{fig.textContent='Tu foto aquí'}
