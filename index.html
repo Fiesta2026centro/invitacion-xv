@@ -67,6 +67,21 @@ button:hover,.btn:hover{transform:translateY(-2px)}
 .galeria figure:nth-child(odd){transform:translateY(1.2rem)}
 .aviso{font-size:1.05rem;font-style:italic}
 footer{padding:2rem 1rem 3rem;font-size:1rem;opacity:.8}
+
+/* Fondos decorativos por sección */
+body{overflow-x:hidden;overflow-x:clip}
+section{position:relative;isolation:isolate}
+.s-flores::before,.s-flores::after,.s-acuarela::before,.s-eventos::before,.s-eventos::after,.s-polvo::before,.s-polvo::after,.s-ramas::before,.s-ramas::after{content:"";position:absolute;z-index:-1;pointer-events:none;background-repeat:no-repeat;background-size:100% 100%}
+.s-flores::before{top:0;left:50%;width:min(92vw,600px);aspect-ratio:3/2;transform:translateX(-50%);opacity:.8;background-image:url(imagenes/flores-marco-1.webp)}
+.s-flores::after{bottom:0;left:50%;width:min(92vw,600px);aspect-ratio:3/2;transform:translateX(-50%) rotate(180deg);opacity:.8;background-image:url(imagenes/flores-marco-2.webp)}
+.s-acuarela::before{top:50%;left:50%;width:min(120vw,640px);aspect-ratio:1/1;transform:translate(-50%,-50%);opacity:.45;background-image:url(imagenes/acuarela.webp)}
+.s-eventos::before{top:0;left:50%;width:min(130vw,760px);aspect-ratio:3/2;transform:translateX(-50%);opacity:.8;background-image:url(imagenes/salpicado-dorado.webp)}
+.s-eventos::after{bottom:0;left:50%;width:min(130vw,760px);aspect-ratio:3/2;transform:translateX(-50%) scaleX(-1);opacity:.8;background-image:url(imagenes/salpicado-dorado.webp)}
+.s-polvo::before{top:0;left:50%;width:min(130vw,760px);aspect-ratio:2/1;transform:translateX(-50%);opacity:.75;background-image:url(imagenes/polvo-rosa.webp)}
+.s-polvo::after{bottom:0;left:50%;width:min(130vw,760px);aspect-ratio:2/1;transform:translateX(-50%) scaleY(-1);opacity:.75;background-image:url(imagenes/polvo-rosa.webp)}
+.s-ramas::before{top:.5rem;right:-30px;width:130px;aspect-ratio:360/533;transform:scaleX(-1);background-image:url(imagenes/rama.webp)}
+.s-ramas::after{bottom:.5rem;left:-30px;width:130px;aspect-ratio:360/533;background-image:url(imagenes/rama.webp)}
+@media (prefers-color-scheme:dark){section::before,section::after{filter:brightness(.7) opacity(.8)}}
 @media (prefers-reduced-motion:no-preference){.hero .xv{animation:in 1.4s ease-out both}@keyframes in{from{opacity:0;letter-spacing:.2em}to{opacity:1}}}
 </style>
 </head>
@@ -84,19 +99,19 @@ footer{padding:2rem 1rem 3rem;font-size:1rem;opacity:.8}
   <audio id="audio" loop preload="none"></audio>
 </section>
 
-<section class="padres">
+<section class="padres s-flores">
   <h2>Mis padres</h2>
   <p><b id="madre"></b><b id="padre"></b></p>
   <p style="margin-top:2rem">Como una página de un cuento de hadas,<br>¡el sueño finalmente se hace realidad!<br>Con la bendición de Dios y el amor de mi familia, tenemos el honor de invitarlos a este día tan especial.</p>
 </section>
 
-<section>
+<section class="s-acuarela">
   <h2>Contando los días</h2>
   <div class="fecha"><span class="dia" id="dia"></span><div id="fechaTxt"></div></div>
   <div class="count" id="count"></div>
 </section>
 
-<section>
+<section class="s-eventos">
   <div class="frame">
     <div class="ico"><svg id="icoCer" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M10 4h4M6 22V12l6-5 6 5v10M3 22h18M10 22v-5a2 2 0 0 1 4 0v5"/></svg></div>
     <h2>Ceremonia</h2>
@@ -119,24 +134,24 @@ footer{padding:2rem 1rem 3rem;font-size:1rem;opacity:.8}
   </div>
 </section>
 
-<section>
+<section class="s-polvo">
   <h2>Momentos</h2>
   <div class="galeria" id="galeria"></div>
 </section>
 
-<section>
+<section class="s-ramas">
   <h2>Código de vestimenta</h2>
   <div class="media" id="mVest"></div>
   <p id="vestimenta"></p>
 </section>
 
-<section>
+<section class="s-acuarela">
   <h2>Lluvia de sobres</h2>
   <div class="media" id="mSobres"></div>
   <p>Mi mejor regalo es que puedas compartir conmigo este gran día. Pero si tu deseo es hacer un obsequio, sugiero un sobre con tu cariño.</p>
 </section>
 
-<section>
+<section class="s-flores">
   <h2>Confirma tu asistencia</h2>
   <div class="media" id="mConf"></div>
   <p>Para que este evento sea aún más perfecto, ayúdanos dando tu respuesta.</p>
@@ -162,11 +177,11 @@ const D = {
   whatsapp: "9931328555",               // 10 dígitos; se agrega el 52 de México solo
   aviso: "Les agradecemos que mantengan a los niños sentados y bajo su supervisión durante toda la fiesta.",
   portada: "fotos/foto1.jpg",            // foto de la portada ("" para dejarla sin foto)
-  fotos: ["fotos/foto1.jpg","fotos/foto2.jpg","fotos/foto3.jpg","fotos/foto4.jpg"],   // galería "Momentos"
+  fotos: ["fotos/foto1.jpg","fotos/foto2.jpg","fotos/foto3.jpg"],   // galería "Momentos"
   imgVestimenta: "",                     // foto para vestimenta; vacío = dibujo
   imgSobres: "",                         // foto para lluvia de sobres; vacío = dibujo
   imgConfirmar: "",                      // foto para confirmar asistencia; vacío = dibujo
-  musica: "muisca.mp3"
+  musica: "musica.mp3"
 };
 /* =================================== */
 const $=id=>document.getElementById(id);
