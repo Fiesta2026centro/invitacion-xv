@@ -192,8 +192,8 @@ dialog legend{padding:0;font-size:1.05rem}
   <button type="button" class="x" id="cerrar" aria-label="Cerrar">×</button>
   <form id="frm" autocomplete="off">
     <h2 id="dlgT">Confirma tu asistencia</h2>
-    <label for="invitados">Nombre(s) de los invitados</label>
-    <textarea id="invitados" name="invitados" rows="2" required placeholder="Ej. Juan Pérez y Ana López"></textarea>
+    <label for="invitados">Nombre(s) de quienes asistirán</label>
+    <textarea id="invitados" name="invitados" rows="3" required placeholder="Escribe el nombre de cada persona. Ej. Juan Pérez, Ana López y Sofía Pérez"></textarea>
     <fieldset>
       <legend>¿Asistirán?</legend>
       <div class="opts">
@@ -201,10 +201,6 @@ dialog legend{padding:0;font-size:1.05rem}
         <label><input type="radio" name="asistencia" value="No podremos asistir"> No podremos asistir</label>
       </div>
     </fieldset>
-    <div id="bloquePers">
-      <label for="personas">Cantidad de personas</label>
-      <select id="personas" name="personas" required><option value="" disabled selected>Elige…</option></select>
-    </div>
     <label for="mensaje">Mensaje para la quinceañera (opcional)</label>
     <textarea id="mensaje" name="mensaje" rows="2"></textarea>
     <input class="hp" type="text" name="web" tabindex="-1" autocomplete="off" aria-hidden="true">
@@ -227,7 +223,7 @@ const D = {
   fecha: "2026-12-26T19:00:00",          // fecha y hora de la ceremonia (AAAA-MM-DDTHH:MM)
   ceremonia: { lugar: "Capilla de San Rafael", hora: "5:00 p. m.", dir: "Fracc. Carrizal, Villahermosa, Tabasco", mapa: "Parroquia de San Rafael, Fracc. Carrizal, Villahermosa, Tabasco" },
   recepcion: { lugar: "Salón de Eventos Fun City", hora: "7:00 p. m.", dir: "", mapa: "Salón de Eventos Fun City, Villahermosa, Tabasco" },
-  vestimenta: "Etiqueta. Se reserva el color rosa para la quinceañera.",
+  vestimenta: "Etiqueta. Se reserva el color azul marino para la quinceañera.",
   whatsapp: "9931328555",               // 10 dígitos; se agrega el 52 de México solo
   apiRsvp: "https://script.google.com/macros/s/AKfycbwThljD5Ip2dqJAfB4xc8or2h-CUBOSNHzIS63uHouoj6oPVs_l96Ln3UZZqiuqQm7f/exec",                           // URL de tu Apps Script (termina en /exec); guarda las confirmaciones en tu hoja
   formulario: "",                        // enlace de tu Google Form (pégalo entre las comillas)
@@ -266,7 +262,7 @@ $('fechaTxt').innerHTML=cap(f.toLocaleDateString('es-MX',{weekday:'long'}))+'<br
 const w=$('confirmar');
 let n=(D.whatsapp||'').replace(/\D/g,'');if(n.length===10)n='52'+n;
 const wa=n?'https://wa.me/'+n+'?text='+encodeURIComponent('Hola, tengo una duda sobre los XV años de '+D.nombre+'.'):'';
-const dlg=$('dlg'),frm=$('frm'),st=$('st'),sel=$('personas');
+const dlg=$('dlg'),frm=$('frm'),st=$('st');
 function abrir(){frm.hidden=false;$('gracias').hidden=true;st.textContent='';
   if(dlg.showModal){dlg.showModal()}else{dlg.setAttribute('open','')}}
 function cerrar(){if(dlg.close){dlg.close()}else{dlg.removeAttribute('open')}}
@@ -278,22 +274,18 @@ if(D.apiRsvp||D.formulario){
   w.href='https://wa.me/'+n+'?text='+encodeURIComponent('Hola, confirmo mi asistencia a los XV años de '+D.nombre+'.');
   w.textContent='Confirmar por WhatsApp';$('wa').remove()
 }else{w.removeAttribute('href');w.style.opacity=.5;$('wa').remove()}
-for(let i=1;i<=10;i++){sel.add(new Option(i+(i===1?' persona':' personas'),i))}
 $('cerrar').onclick=cerrar;$('ok').onclick=cerrar;
 dlg.addEventListener('click',e=>{if(e.target===dlg)cerrar()});
-frm.addEventListener('change',()=>{
-  const no=frm.asistencia.value==='No podremos asistir';
-  $('bloquePers').hidden=no;sel.required=!no});
 frm.addEventListener('submit',async e=>{
   e.preventDefault();if(frm.web.value)return;
   const btn=$('enviar');btn.disabled=true;btn.textContent='Enviando…';st.textContent='';
   const fd=new URLSearchParams(new FormData(frm));
-  const no=fd.get('asistencia')==='No podremos asistir';if(no)fd.set('personas','0');
+  const no=fd.get('asistencia')==='No podremos asistir';
   try{
     const r=await fetch(D.apiRsvp,{method:'POST',body:fd});
     const j=await r.json();if(!j.ok)throw new Error(j.error||'error');
     $('grTxt').textContent=no?'Lamentamos que no puedan acompañarnos. Gracias por avisarnos.':'Tu confirmación quedó registrada. ¡Los esperamos!';
-    frm.hidden=true;$('gracias').hidden=false;frm.reset();$('bloquePers').hidden=false;sel.required=true;
+    frm.hidden=true;$('gracias').hidden=false;frm.reset();
   }catch(err){
     st.textContent='No se pudo enviar. Revisa tu conexión e inténtalo de nuevo, o escríbenos por WhatsApp.';
   }
