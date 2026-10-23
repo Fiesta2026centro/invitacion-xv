@@ -7,15 +7,15 @@
 <title>Mis XV Años</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Pinyon+Script&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Pinyon+Script&display=swap" rel="stylesheet">
 <style>
-:root{color-scheme:dark;--bg:#14213d;--panel:#1c2d54;--ink:#848482;--rose:#f1c3cb;--soft:#233862;--gold:#848482;
+:root{color-scheme:dark;--bg:#14213d;--panel:#1c2d54;--ink:#ffffff;--rose:#f1c3cb;--soft:#233862;--gold:#e0be72;--title:#f7dca0;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 *{box-sizing:border-box}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:'Cormorant Garamond',Georgia,serif;font-size:1.25rem;line-height:1.55;text-align:center}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:1.3rem;line-height:1.55;text-align:center}
 section{max-width:560px;margin:0 auto;padding:4.5rem 1.6rem}
-h2{font-family:'Pinyon Script','Snell Roundhand',cursive;font-weight:400;font-size:2.8rem;line-height:1.1;margin:0 0 1rem;color:var(--rose)}
+h2{font-family:'Pinyon Script','Snell Roundhand',cursive;font-weight:400;font-size:3.1rem;line-height:1.1;margin:0 0 1rem;color:var(--title);-webkit-text-stroke:.6px var(--title)}
 p{margin:.4rem 0}
 svg{display:block}
 .hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative;overflow:hidden;padding:2rem 1rem;
@@ -55,7 +55,7 @@ button:hover,.btn:hover{transform:translateY(-2px)}
 .orn{display:flex;align-items:center;gap:.7rem;justify-content:center;color:var(--gold);margin:.6rem auto 1rem;max-width:220px}
 .orn::before,.orn::after{content:"";flex:1;height:1px;background:var(--gold);opacity:.6}
 .lugar{font-weight:600;font-size:1.35rem;margin-bottom:.1rem}
-.dir{font-size:1.05rem;opacity:.85;margin:0 0 1.2rem}
+.dir{font-size:1.1rem;margin:0 0 1.2rem}
 .lugar:last-of-type{margin-bottom:1.2rem}
 /* Imágenes de secciones */
 .media{display:flex;justify-content:center;gap:1rem;margin:0 auto 1.4rem;color:var(--rose)}
@@ -70,7 +70,7 @@ footer{padding:2rem 1rem 3rem;font-size:1rem;opacity:.8}
 
 /* Fondos decorativos por sección */
 body{overflow-x:hidden;overflow-x:clip}
-section{position:relative;isolation:isolate;text-shadow:0 1px 8px rgba(10,18,40,.6)}
+section{position:relative;isolation:isolate;text-shadow:0 0 2px #0c1630,0 0 8px #0c1630,0 0 18px rgba(12,22,48,.95)}
 .s-flores::before,.s-flores::after,.s-acuarela::before,.s-eventos::before,.s-eventos::after,.s-polvo::before,.s-polvo::after,.s-ramas::before,.s-ramas::after{content:"";position:absolute;z-index:-1;pointer-events:none;background-repeat:no-repeat;background-size:100% 100%}
 .s-flores::before{top:0;left:50%;width:min(92vw,600px);aspect-ratio:3/2;transform:translateX(-50%);opacity:.6;background-image:url(imagenes/flores-marco-1.webp)}
 .s-flores::after{bottom:0;left:50%;width:min(92vw,600px);aspect-ratio:3/2;transform:translateX(-50%) rotate(180deg);opacity:.6;background-image:url(imagenes/flores-marco-2.webp)}
@@ -225,9 +225,9 @@ const D = {
   madre: "Alondra",
   padre: "David",
   fecha: "2026-12-26T19:00:00",          // fecha y hora de la ceremonia (AAAA-MM-DDTHH:MM)
-  ceremonia: { lugar: "Iglesia de San Rafael", hora: "5:00 p. m.", dir: "Fracc. Carrizal, Villahermosa, Tabasco", mapa: "Parroquia de San Rafael, Fracc. Carrizal, Villahermosa, Tabasco" },
+  ceremonia: { lugar: "Capilla de San Rafael", hora: "5:00 p. m.", dir: "Fracc. Carrizal, Villahermosa, Tabasco", mapa: "Parroquia de San Rafael, Fracc. Carrizal, Villahermosa, Tabasco" },
   recepcion: { lugar: "Salón de Eventos Fun City", hora: "7:00 p. m.", dir: "", mapa: "Salón de Eventos Fun City, Villahermosa, Tabasco" },
-  vestimenta: "Etiqueta. Se reserva el color azul para la quinceañera.",
+  vestimenta: "Etiqueta. Se reserva el color rosa para la quinceañera.",
   whatsapp: "9931328555",               // 10 dígitos; se agrega el 52 de México solo
   apiRsvp: "https://script.google.com/macros/s/AKfycbwThljD5Ip2dqJAfB4xc8or2h-CUBOSNHzIS63uHouoj6oPVs_l96Ln3UZZqiuqQm7f/exec",                           // URL de tu Apps Script (termina en /exec); guarda las confirmaciones en tu hoja
   formulario: "",                        // enlace de tu Google Form (pégalo entre las comillas)
