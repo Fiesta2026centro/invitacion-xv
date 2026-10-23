@@ -331,7 +331,7 @@ const bandas=document.querySelectorAll('.banda');
 if(F.length){const h=$('hero'),t=new Image();t.onload=()=>{h.style.backgroundImage='url("'+F[0]+'")';h.classList.add('con-foto')};t.src=F[0];
   bandas.forEach((b,i)=>{b.style.backgroundImage='url("'+F[(i+1)%F.length]+'")'})}
 else{bandas.forEach(b=>b.remove())}
-if(D.padrinos&&D.padrinos.length){$('padrinos').innerHTML='<p class="sub" style="margin-top:2rem">Y la compañía de mis padrinos</p>'+D.padrinos.map(p=>'<p class="par"><b>'+p.a+'</b>'+(p.b?'<span>&amp;</span><b>'+p.b+'</b>':'')+'</p>').join('')}
+if(D.padrinos&&D.padrinos.length){$('padrinos').innerHTML='<p class="sub" style="margin-top:2rem">Y la compañía de mi madrina</p>'+D.padrinos.map(p=>'<p class="par"><b>'+p.a+'</b>'+(p.b?'<span>&amp;</span><b>'+p.b+'</b>':'')+'</p>').join('')}
 const it=[{h:D.ceremonia.hora,t:'Ceremonia'},{h:D.recepcion.hora,t:'Recepción'}].concat((D.extras||[]).map(x=>({h:x.hora,t:x.txt})));
 if(D.fin)it.push({h:D.fin,t:'Fin del evento'});
 $('tl').innerHTML=it.map(x=>'<li><b>'+x.h+'</b>'+x.t+'</li>').join('');
