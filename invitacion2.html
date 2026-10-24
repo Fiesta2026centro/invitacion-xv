@@ -133,6 +133,7 @@ dialog legend{padding:0;font-size:1.05rem}
 .tl b{display:block;color:var(--gold);font-size:1.7rem;line-height:1.2}
 .tit{margin:0 0 1rem;line-height:0}
 .tit img{display:block;margin:0 auto;max-width:100%;height:auto;width:calc(var(--sw) * min(.25px,(100vw - 3.6rem) / 2013));filter:drop-shadow(0 0 3px rgba(12,22,48,.9)) drop-shadow(0 0 10px rgba(12,22,48,.8))}
+.cardfoto{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:10px;margin:.4rem 0 1.2rem;box-shadow:0 12px 28px -14px rgba(0,0,0,.7)}
 .cn{font-family:'Pinyon Script','Snell Roundhand',cursive;font-size:clamp(2.2rem,9vw,3.2rem);line-height:1.2;color:var(--title);margin:1.2rem 0 0}
 </style>
 </head>
@@ -171,6 +172,7 @@ dialog legend{padding:0;font-size:1.05rem}
   <div class="frame">
     <div class="ico"><svg id="icoCer" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M10 4h4M6 22V12l6-5 6 5v10M3 22h18M10 22v-5a2 2 0 0 1 4 0v5"/></svg></div>
     <h2 class="tit"><img src="imagenes/titulo-ceremonia-religiosa.webp" alt="Ceremonia religiosa" style="--sw:1687"></h2>
+    <img class="cardfoto" id="fotoCer" alt="Ceremonia religiosa">
     <p class="cuando" id="cerCuando"></p>
     <p class="hora" id="cerHora"></p>
     <div class="orn">✦</div>
@@ -181,6 +183,7 @@ dialog legend{padding:0;font-size:1.05rem}
   <div class="frame">
     <div class="ico"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h6l-1 6a3 3 0 0 1-4 0zM10 11v9M7 20h6M15 5l2-2M17 8l3-1M17 12l3 1"/></svg></div>
     <h2 class="tit"><img src="imagenes/titulo-recepcion.webp" alt="Recepción" style="--sw:794"></h2>
+    <img class="cardfoto" id="fotoRec" alt="Recepción">
     <p class="cuando" id="recCuando"></p>
     <p class="hora" id="recHora"></p>
     <div class="orn">✦</div>
@@ -263,22 +266,25 @@ const D = {
   nombre: "Mariana Guadalupe Bolaina Hernández",
   madre: "Alondra",
   padre: "David",
-  fecha: "2026-12-26T19:00:00",          // fecha y hora de la ceremonia (AAAA-MM-DDTHH:MM)
-  ceremonia: { lugar: "Parroquia de San Rafael", hora: "5:00 p. m.", dir: "Fracc. Carrizal, Villahermosa, Tabasco", mapa: "Parroquia de San Rafael, Fracc. Carrizal, Villahermosa, Tabasco" },
-  recepcion: { lugar: "Salón de Eventos Fun City", hora: "7:00 p. m.", dir: "", mapa: "Salón de Eventos Fun City, Villahermosa, Tabasco" },
-  vestimenta: "Etiqueta. Se reserva el color azul marino para la quinceañera.",
+  fecha: "2026-12-28T19:00:00",          // fecha y hora de la ceremonia (AAAA-MM-DDTHH:MM)
+  ceremonia: { lugar: "Parroquia de San Rafael", hora: "7:00 p. m.", dir: "Fracc. Carrizal, Villahermosa, Tabasco", mapa: "Parroquia de San Rafael, Fracc. Carrizal, Villahermosa, Tabasco" },
+  recepcion: { lugar: "Salón de Eventos Fun City", hora: "8:00 p. m.", dir: "", mapa: "Salón de Eventos Fun City, Villahermosa, Tabasco" },
+  vestimenta: "Etiqueta. Se reserva el color rosa para la quinceañera.",
   whatsapp: "9931328555",               // 10 dígitos; se agrega el 52 de México solo
   apiRsvp: "",                           // URL de tu Apps Script (termina en /exec); guarda las confirmaciones en tu hoja
   formulario: "",                        // enlace de tu Google Form (pégalo entre las comillas)
   aviso: "Les agradecemos que mantengan a los niños sentados y bajo su supervisión durante toda la fiesta.",
   portada: "fotos/foto1.jpg",            // foto de la portada ("" para dejarla sin foto)
-  fotos: ["fotos/foto1.jpg","fotos/foto2.jpg","fotos/foto3.jpg"],   // galería "Momentos"
+  fotos: ["fotos/foto1.jpg"],             // foto de la portada (la primera de la lista)
   imgVestimenta: "",                     // foto para vestimenta; vacío = dibujo
   imgSobres: "",                         // foto para lluvia de sobres; vacío = dibujo
   imgConfirmar: "",                      // foto para confirmar asistencia; vacío = dibujo
   musica: "musica.mp3",
+  bandas: ["", "", "fotos/foto1.jpg", ""],   // fotos grandes entre secciones (en orden); "" = sin foto, se quita ese espacio
+  fotoCeremonia: "imagenes/ceremonia-religiosa.jpg",   // foto bajo el título Ceremonia religiosa ("" = sin foto)
+  fotoRecepcion: "imagenes/comida.jpg",                // foto bajo el título Recepción ("" = sin foto)
   frase: "Los mejores momentos de la vida son los que se comparten con quienes más amamos.",
-  padrinos: [{a:"Marisela Gómez Priego"}],                          // opcional. Ej.: [{a:"Nombre madrina", b:"Nombre padrino"}]
+  padrinos: [],                          // opcional. Ej.: [{a:"Nombre madrina", b:"Nombre padrino"}]
   extras: [],                            // opcional. Ej.: [{hora:"10:00 p. m.", txt:"Vals"}]
   fin: "",                               // hora de fin del evento (opcional)
   album: ""                              // enlace del álbum de fotos (opcional)
@@ -330,10 +336,9 @@ frm.addEventListener('submit',async e=>{
   }
   btn.disabled=false;btn.textContent='Enviar confirmación'});
 const F=(D.fotos||[]).filter(Boolean);
-const bandas=document.querySelectorAll('.banda');
-if(F.length){const h=$('hero'),t=new Image();t.onload=()=>{h.style.backgroundImage='url("'+F[0]+'")';h.classList.add('con-foto')};t.src=F[0];
-  bandas.forEach((b,i)=>{b.style.backgroundImage='url("'+F[(i+1)%F.length]+'")'})}
-else{bandas.forEach(b=>b.remove())}
+if(F.length){const h=$('hero'),t=new Image();t.onload=()=>{h.style.backgroundImage='url("'+F[0]+'")';h.classList.add('con-foto')};t.src=F[0]}
+document.querySelectorAll('.banda').forEach((b,i)=>{const src=(D.bandas||[])[i];if(src){b.style.backgroundImage='url("'+src+'")'}else{b.remove()}});
+[['fotoCer',D.fotoCeremonia],['fotoRec',D.fotoRecepcion]].forEach(([id,src])=>{const el=$(id);if(src){el.src=src;el.onerror=()=>el.remove()}else{el.remove()}});
 if(D.padrinos&&D.padrinos.length){$('padrinos').innerHTML='<h2 class="tit" style="margin-top:2.5rem"><img src="imagenes/titulo-velacion.webp" alt="Velación" style="--sw:707"></h2>'+D.padrinos.map(p=>'<p class="par"><b>'+p.a+'</b>'+(p.b?'<span>&amp;</span><b>'+p.b+'</b>':'')+'</p>').join('')}
 const it=[{h:D.ceremonia.hora,t:'Ceremonia'},{h:D.recepcion.hora,t:'Recepción'}].concat((D.extras||[]).map(x=>({h:x.hora,t:x.txt})));
 if(D.fin)it.push({h:D.fin,t:'Fin del evento'});
