@@ -131,6 +131,8 @@ dialog legend{padding:0;font-size:1.05rem}
 .tl li:last-child{margin-bottom:0}
 .tl li::before{content:"";position:absolute;left:-2.15rem;top:.55rem;width:.95rem;height:.95rem;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px var(--bg)}
 .tl b{display:block;color:var(--gold);font-size:1.7rem;line-height:1.2}
+.tit{margin:0 0 1rem;line-height:0}
+.tit img{display:block;margin:0 auto;max-width:100%;height:auto;width:calc(var(--sw) * min(.25px,(100vw - 3.6rem) / 2013));filter:drop-shadow(0 0 3px rgba(12,22,48,.9)) drop-shadow(0 0 10px rgba(12,22,48,.8))}
 .cn{font-family:'Pinyon Script','Snell Roundhand',cursive;font-size:clamp(2.2rem,9vw,3.2rem);line-height:1.2;color:var(--title);margin:1.2rem 0 0}
 </style>
 </head>
@@ -153,7 +155,7 @@ dialog legend{padding:0;font-size:1.05rem}
 <div class="banda"></div>
 
 <section class="s-acuarela rv">
-  <h2>Mis padres</h2>
+  <h2 class="tit"><img src="imagenes/titulo-padres.webp" alt="Padres" style="--sw:647"></h2>
   <p class="sub">Con la bendición de Dios y de mis padres</p>
   <p class="par"><b id="madre"></b><span>&amp;</span><b id="padre"></b></p>
   <div id="padrinos"></div>
@@ -168,7 +170,7 @@ dialog legend{padding:0;font-size:1.05rem}
 <section class="s-eventos rv">
   <div class="frame">
     <div class="ico"><svg id="icoCer" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M10 4h4M6 22V12l6-5 6 5v10M3 22h18M10 22v-5a2 2 0 0 1 4 0v5"/></svg></div>
-    <h2>Ceremonia</h2>
+    <h2 class="tit"><img src="imagenes/titulo-ceremonia-religiosa.webp" alt="Ceremonia religiosa" style="--sw:1687"></h2>
     <p class="cuando" id="cerCuando"></p>
     <p class="hora" id="cerHora"></p>
     <div class="orn">✦</div>
@@ -178,7 +180,7 @@ dialog legend{padding:0;font-size:1.05rem}
   </div>
   <div class="frame">
     <div class="ico"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h6l-1 6a3 3 0 0 1-4 0zM10 11v9M7 20h6M15 5l2-2M17 8l3-1M17 12l3 1"/></svg></div>
-    <h2>Recepción</h2>
+    <h2 class="tit"><img src="imagenes/titulo-recepcion.webp" alt="Recepción" style="--sw:794"></h2>
     <p class="cuando" id="recCuando"></p>
     <p class="hora" id="recHora"></p>
     <div class="orn">✦</div>
@@ -190,18 +192,18 @@ dialog legend{padding:0;font-size:1.05rem}
 <div class="banda"></div>
 
 <section class="s-acuarela rv">
-  <h2>Itinerario</h2>
+  <h2 class="tit"><img src="imagenes/titulo-itinerario.webp" alt="Itinerario" style="--sw:847"></h2>
   <ul class="tl" id="tl"></ul>
 </section>
 
 <section class="s-flores rv">
-  <h2>Lluvia de sobres</h2>
+  <h2 class="tit"><img src="imagenes/titulo-lluvia-de-sobres.webp" alt="Lluvia de sobres" style="--sw:1465"></h2>
   <div class="media"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="1.5"/><path d="M3 7l9 6 9-6"/></svg></div>
   <p>Mi mejor regalo es que puedas compartir conmigo este gran día. Pero si tu deseo es hacer un obsequio, sugiero un sobre con tu cariño.</p>
 </section>
 
 <section class="s-ramas rv">
-  <h2>Código de vestimenta</h2>
+  <h2 class="tit"><img src="imagenes/titulo-codigo-de-vestimenta.webp" alt="Código de vestimenta" style="--sw:1811"></h2>
   <div class="media"><svg viewBox="0 0 24 24"><path d="M9 2l3 3 3-3 .5 6L14 12l4 10H6l4-10-1.5-4z"/></svg><svg viewBox="0 0 24 24"><path d="M8 3l4 4 4-4 4 3-2 5-2-1v11H8V10l-2 1-2-5z"/></svg></div>
   <p id="vestimenta"></p>
 </section>
@@ -214,7 +216,7 @@ dialog legend{padding:0;font-size:1.05rem}
 </section>
 
 <section class="s-flores rv">
-  <h2>Confirma tu asistencia</h2>
+  <h2 class="tit"><img src="imagenes/titulo-confirma-asistencia.webp" alt="Confirma tu asistencia" style="--sw:2013"></h2>
   <div class="media"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/></svg></div>
   <p>Para que este evento sea aún más perfecto, ayúdanos dando tu respuesta.</p>
   <p style="margin-top:1.2rem"><a class="btn" id="confirmar" target="_blank" rel="noopener">Confirmar asistencia</a></p>
@@ -225,6 +227,7 @@ dialog legend{padding:0;font-size:1.05rem}
 <div class="banda"></div>
 <section class="s-acuarela rv">
   <p class="frase">Te esperamos con mucho cariño…</p>
+  <h2 class="tit" style="margin-top:1.4rem"><img src="imagenes/titulo-no-faltes.webp" alt="¡No faltes!" style="--sw:975"></h2>
   <p class="cn" id="cierreN"></p>
 </section>
 <footer>XV años · <span id="pie"></span></footer>
@@ -260,12 +263,12 @@ const D = {
   nombre: "Mariana Guadalupe Bolaina Hernández",
   madre: "Alondra",
   padre: "David",
-  fecha: "2026-12-26T19:00:00",          // fecha y hora de la ceremonia (AAAA-MM-DDTHH:MM)
-  ceremonia: { lugar: "Capilla de San Rafael", hora: "5:00 p. m.", dir: "Fracc. Carrizal, Villahermosa, Tabasco", mapa: "Parroquia de San Rafael, Fracc. Carrizal, Villahermosa, Tabasco" },
-  recepcion: { lugar: "Salón de Eventos Fun City", hora: "7:00 p. m.", dir: "", mapa: "Salón de Eventos Fun City, Villahermosa, Tabasco" },
-  vestimenta: "Etiqueta. Se reserva el color azul marino para la quinceañera.",
+  fecha: "2026-12-28T19:00:00",          // fecha y hora de la ceremonia (AAAA-MM-DDTHH:MM)
+  ceremonia: { lugar: "Parroquia de San Rafael", hora: "7:00 p. m.", dir: "Fracc. Carrizal, Villahermosa, Tabasco", mapa: "Parroquia de San Rafael, Fracc. Carrizal, Villahermosa, Tabasco" },
+  recepcion: { lugar: "Salón de Eventos Fun City", hora: "8:00 p. m.", dir: "", mapa: "Salón de Eventos Fun City, Villahermosa, Tabasco" },
+  vestimenta: "Etiqueta. Se reserva el color rosa para la quinceañera.",
   whatsapp: "9931328555",               // 10 dígitos; se agrega el 52 de México solo
-  apiRsvp: "https://script.google.com/macros/s/AKfycbwThljD5Ip2dqJAfB4xc8or2h-CUBOSNHzIS63uHouoj6oPVs_l96Ln3UZZqiuqQm7f/exec",                           // URL de tu Apps Script (termina en /exec); guarda las confirmaciones en tu hoja
+  apiRsvp: "",                           // URL de tu Apps Script (termina en /exec); guarda las confirmaciones en tu hoja
   formulario: "",                        // enlace de tu Google Form (pégalo entre las comillas)
   aviso: "Les agradecemos que mantengan a los niños sentados y bajo su supervisión durante toda la fiesta.",
   portada: "fotos/foto1.jpg",            // foto de la portada ("" para dejarla sin foto)
@@ -275,7 +278,7 @@ const D = {
   imgConfirmar: "",                      // foto para confirmar asistencia; vacío = dibujo
   musica: "musica.mp3",
   frase: "Los mejores momentos de la vida son los que se comparten con quienes más amamos.",
-  padrinos: [{a:"Marisela Gómez Priego"}],                          // opcional. Ej.: [{a:"Nombre madrina", b:"Nombre padrino"}]
+  padrinos: [],                          // opcional. Ej.: [{a:"Nombre madrina", b:"Nombre padrino"}]
   extras: [],                            // opcional. Ej.: [{hora:"10:00 p. m.", txt:"Vals"}]
   fin: "",                               // hora de fin del evento (opcional)
   album: ""                              // enlace del álbum de fotos (opcional)
@@ -331,7 +334,7 @@ const bandas=document.querySelectorAll('.banda');
 if(F.length){const h=$('hero'),t=new Image();t.onload=()=>{h.style.backgroundImage='url("'+F[0]+'")';h.classList.add('con-foto')};t.src=F[0];
   bandas.forEach((b,i)=>{b.style.backgroundImage='url("'+F[(i+1)%F.length]+'")'})}
 else{bandas.forEach(b=>b.remove())}
-if(D.padrinos&&D.padrinos.length){$('padrinos').innerHTML='<p class="sub" style="margin-top:2rem">Y la compañía de mi madrina</p>'+D.padrinos.map(p=>'<p class="par"><b>'+p.a+'</b>'+(p.b?'<span>&amp;</span><b>'+p.b+'</b>':'')+'</p>').join('')}
+if(D.padrinos&&D.padrinos.length){$('padrinos').innerHTML='<h2 class="tit" style="margin-top:2.5rem"><img src="imagenes/titulo-velacion.webp" alt="Velación" style="--sw:707"></h2>'+D.padrinos.map(p=>'<p class="par"><b>'+p.a+'</b>'+(p.b?'<span>&amp;</span><b>'+p.b+'</b>':'')+'</p>').join('')}
 const it=[{h:D.ceremonia.hora,t:'Ceremonia'},{h:D.recepcion.hora,t:'Recepción'}].concat((D.extras||[]).map(x=>({h:x.hora,t:x.txt})));
 if(D.fin)it.push({h:D.fin,t:'Fin del evento'});
 $('tl').innerHTML=it.map(x=>'<li><b>'+x.h+'</b>'+x.t+'</li>').join('');
