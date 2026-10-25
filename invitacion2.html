@@ -135,6 +135,8 @@ dialog legend{padding:0;font-size:1.05rem}
 .tit img{display:block;margin:0 auto;max-width:100%;height:auto;width:calc(var(--sw) * min(.25px,(100vw - 3.6rem) / 2013));filter:drop-shadow(0 0 3px rgba(12,22,48,.9)) drop-shadow(0 0 10px rgba(12,22,48,.8))}
 .cardfoto{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:10px;margin:.4rem 0 1.2rem;box-shadow:0 12px 28px -14px rgba(0,0,0,.7)}
 .madr{font-style:italic;font-size:2rem;line-height:1.2;letter-spacing:.04em;color:var(--title);margin:2.6rem 0 0}
+.tipo{font-size:2rem;letter-spacing:.3em;padding-left:.3em;text-transform:uppercase;color:var(--gold);font-weight:600;margin:.2rem 0 .8rem}
+.limite{font-size:1.6rem;color:var(--gold);font-weight:600;margin:.6rem 0 0}
 .cn{font-family:'Pinyon Script','Snell Roundhand',cursive;font-size:clamp(2.2rem,9vw,3.2rem);line-height:1.2;color:var(--title);margin:1.2rem 0 0}
 </style>
 </head>
@@ -195,11 +197,6 @@ dialog legend{padding:0;font-size:1.05rem}
 </section>
 <div class="banda"></div>
 
-<section class="s-acuarela rv">
-  <h2 class="tit"><img src="imagenes/titulo-itinerario.webp" alt="Itinerario" style="--sw:847"></h2>
-  <ul class="tl" id="tl"></ul>
-</section>
-
 <section class="s-flores rv">
   <h2 class="tit"><img src="imagenes/titulo-lluvia-de-sobres.webp" alt="Lluvia de sobres" style="--sw:1465"></h2>
   <div class="media"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="1.5"/><path d="M3 7l9 6 9-6"/></svg></div>
@@ -209,6 +206,7 @@ dialog legend{padding:0;font-size:1.05rem}
 <section class="s-ramas rv">
   <h2 class="tit"><img src="imagenes/titulo-codigo-de-vestimenta.webp" alt="Código de vestimenta" style="--sw:1811"></h2>
   <div class="media"><svg viewBox="0 0 24 24"><path d="M9 2l3 3 3-3 .5 6L14 12l4 10H6l4-10-1.5-4z"/></svg><svg viewBox="0 0 24 24"><path d="M8 3l4 4 4-4 4 3-2 5-2-1v11H8V10l-2 1-2-5z"/></svg></div>
+  <p class="tipo" id="vestTipo"></p>
   <p id="vestimenta"></p>
 </section>
 
@@ -222,10 +220,10 @@ dialog legend{padding:0;font-size:1.05rem}
 <section class="s-flores rv">
   <h2 class="tit"><img src="imagenes/titulo-confirma-asistencia.webp" alt="Confirma tu asistencia" style="--sw:2013"></h2>
   <div class="media"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/></svg></div>
-  <p>Para que este evento sea aún más perfecto, ayúdanos dando tu respuesta. Antes del 15 de Diciembre </p>
+  <p>Para que este evento sea aún más perfecto, ayúdanos dando tu respuesta.</p>
+  <p class="limite" id="limite"></p>
   <p style="margin-top:1.2rem"><a class="btn" id="confirmar" target="_blank" rel="noopener">Confirmar asistencia</a></p>
   <p id="wa" style="margin-top:1.1rem;font-size:1.05rem"><a id="waLink" target="_blank" rel="noopener" style="color:inherit">¿Dudas? Escríbenos por WhatsApp</a></p>
-  <p class="aviso" id="aviso" style="margin-top:2rem"></p>
 </section>
 
 <div class="banda"></div>
@@ -267,14 +265,13 @@ const D = {
   nombre: "Mariana Guadalupe Bolaina Hernández",
   madre: "Alondra",
   padre: "David",
-  fecha: "2026-12-26T19:00:00",          // fecha y hora de la ceremonia (AAAA-MM-DDTHH:MM)
-  ceremonia: { lugar: "Capilla de San Rafael", hora: "5:00 p. m.", dir: "Fracc. Carrizal, Villahermosa, Tabasco", mapa: "Parroquia de San Rafael, Fracc. Carrizal, Villahermosa, Tabasco" },
-  recepcion: { lugar: "Salón de Eventos Fun City", hora: "7:00 p. m.", dir: "", mapa: "Salón de Eventos Fun City, Villahermosa, Tabasco" },
-  vestimenta: "Etiqueta. Se reserva el color azul marino para la quinceañera.",
+  fecha: "2026-12-28T19:00:00",          // fecha y hora de la ceremonia (AAAA-MM-DDTHH:MM)
+  ceremonia: { lugar: "Parroquia de San Rafael", hora: "7:00 p. m.", dir: "Fracc. Carrizal, Villahermosa, Tabasco", mapa: "Parroquia de San Rafael, Fracc. Carrizal, Villahermosa, Tabasco" },
+  recepcion: { lugar: "Salón de Eventos Fun City", hora: "8:00 p. m.", dir: "", mapa: "Salón de Eventos Fun City, Villahermosa, Tabasco" },
+  vestimenta: "Etiqueta. Se reserva el color rosa para la quinceañera.",
   whatsapp: "9931328555",               // 10 dígitos; se agrega el 52 de México solo
-  apiRsvp: "https://script.google.com/macros/s/AKfycbwThljD5Ip2dqJAfB4xc8or2h-CUBOSNHzIS63uHouoj6oPVs_l96Ln3UZZqiuqQm7f/exec",                           // URL de tu Apps Script (termina en /exec); guarda las confirmaciones en tu hoja
+  apiRsvp: "",                           // URL de tu Apps Script (termina en /exec); guarda las confirmaciones en tu hoja
   formulario: "",                        // enlace de tu Google Form (pégalo entre las comillas)
-  aviso: "",
   portada: "fotos/foto1.jpg",            // foto de la portada ("" para dejarla sin foto)
   fotos: ["fotos/foto1.jpg"],             // foto de la portada (la primera de la lista)
   imgVestimenta: "",                     // foto para vestimenta; vacío = dibujo
@@ -284,17 +281,19 @@ const D = {
   bandas: ["", "", "fotos/foto1.jpg", ""],   // fotos grandes entre secciones (en orden); "" = sin foto, se quita ese espacio
   fotoCeremonia: "imagenes/ceremonia-religiosa.jpg",   // foto bajo el título Ceremonia religiosa ("" = sin foto)
   fotoRecepcion: "imagenes/comida.jpg",                // foto bajo el título Recepción ("" = sin foto)
+  vestimentaTipo: "Formal",                // palabra grande bajo el código de vestimenta ("" = no se muestra)
+  limite: "Antes del 15 de Diciembre",     // fecha límite para confirmar ("" = no se muestra)
   frase: "Los mejores momentos de la vida son los que se comparten con quienes más amamos.",
-  padrinos: [{a:"Marisela Gómez Priego"}],                          // opcional. Ej.: [{a:"Nombre madrina", b:"Nombre padrino"}]
-  extras: [],                            // opcional. Ej.: [{hora:"10:00 p. m.", txt:"Vals"}]
-  fin: "",                               // hora de fin del evento (opcional)
+  padrinos: [],                          // opcional. Ej.: [{a:"Nombre madrina", b:"Nombre padrino"}]
   album: ""                              // enlace del álbum de fotos (opcional)
 };
 /* =================================== */
 const $=id=>document.getElementById(id);
 $('nombre').textContent=D.nombre;$('madre').textContent=D.madre;$('padre').textContent=D.padre;
 $('pie').textContent=D.nombre;$('cierreN').textContent=D.nombre;document.title='XV Años '+D.nombre;
-$('aviso').textContent=D.aviso;$('vestimenta').textContent=D.vestimenta;$('frase').textContent='“'+D.frase+'”';
+$('vestimenta').textContent=D.vestimenta;
+if(D.limite){$('limite').textContent=D.limite}else{$('limite').remove()}
+if(D.vestimentaTipo){$('vestTipo').textContent=D.vestimentaTipo}else{$('vestTipo').remove()}$('frase').textContent='“'+D.frase+'”';
 const f=new Date(D.fecha);
 const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
 const cuando=cap(f.toLocaleDateString('es-MX',{weekday:'long',day:'numeric',month:'long'}));
@@ -341,9 +340,6 @@ if(F.length){const h=$('hero'),t=new Image();t.onload=()=>{h.style.backgroundIma
 document.querySelectorAll('.banda').forEach((b,i)=>{const src=(D.bandas||[])[i];if(src){b.style.backgroundImage='url("'+src+'")'}else{b.remove()}});
 [['fotoCer',D.fotoCeremonia],['fotoRec',D.fotoRecepcion]].forEach(([id,src])=>{const el=$(id);if(src){el.src=src;el.onerror=()=>el.remove()}else{el.remove()}});
 if(D.padrinos&&D.padrinos.length){$('padrinos').innerHTML='<p class="madr">Madrina de</p><h2 class="tit" style="margin-top:.2rem"><img src="imagenes/titulo-velacion.webp" alt="Madrina de Velación" style="--sw:707"></h2>'+D.padrinos.map(p=>'<p class="par"><b>'+p.a+'</b>'+(p.b?'<span>&amp;</span><b>'+p.b+'</b>':'')+'</p>').join('')}
-const it=[{h:D.ceremonia.hora,t:'Ceremonia'},{h:D.recepcion.hora,t:'Recepción'}].concat((D.extras||[]).map(x=>({h:x.hora,t:x.txt})));
-if(D.fin)it.push({h:D.fin,t:'Fin del evento'});
-$('tl').innerHTML=it.map(x=>'<li><b>'+x.h+'</b>'+x.t+'</li>').join('');
 if(D.album){$('albumLink').href=D.album}else{$('secAlbum').remove()}
 $('count').innerHTML=['Días','Horas','Minutos','Segundos'].map(l=>'<div><strong>0</strong><span>'+l+'</span></div>').join('');
 function tick(){let s=Math.max(0,Math.floor((f-new Date())/1000));
