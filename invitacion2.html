@@ -113,7 +113,7 @@ dialog legend{padding:0;font-size:1.05rem}
 .js .rv.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.js .rv{opacity:1;transform:none;transition:none}}
 .hero .inv{font-style:italic;font-size:1.25rem;margin:0 0 .4rem}
-.hero .fh{letter-spacing:.35em;font-size:1.3rem;margin:1.2rem 0 0;color:var(--title)}
+.hero .fh{letter-spacing:.3em;font-size:1.75rem;margin:1.2rem 0 0;color:var(--title)}
 .hero.con-foto .inv{color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.6)}
 .hero.con-foto .fh{text-shadow:0 2px 14px rgba(0,0,0,.7)}
 .banda{height:68svh;min-height:380px;background-size:cover;background-position:center 20%;background-color:var(--panel);position:relative}
@@ -134,6 +134,7 @@ dialog legend{padding:0;font-size:1.05rem}
 .tit{margin:0 0 1rem;line-height:0}
 .tit img{display:block;margin:0 auto;max-width:100%;height:auto;width:calc(var(--sw) * min(.25px,(100vw - 3.6rem) / 2013));filter:drop-shadow(0 0 3px rgba(12,22,48,.9)) drop-shadow(0 0 10px rgba(12,22,48,.8))}
 .cardfoto{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:10px;margin:.4rem 0 1.2rem;box-shadow:0 12px 28px -14px rgba(0,0,0,.7)}
+.madr{font-style:italic;font-size:2rem;line-height:1.2;letter-spacing:.04em;color:var(--title);margin:2.6rem 0 0}
 .cn{font-family:'Pinyon Script','Snell Roundhand',cursive;font-size:clamp(2.2rem,9vw,3.2rem);line-height:1.2;color:var(--title);margin:1.2rem 0 0}
 </style>
 </head>
@@ -266,12 +267,12 @@ const D = {
   nombre: "Mariana Guadalupe Bolaina Hernández",
   madre: "Alondra",
   padre: "David",
-  fecha: "2026-12-26T19:00:00",          // fecha y hora de la ceremonia (AAAA-MM-DDTHH:MM)
-  ceremonia: { lugar: "Capilla de San Rafael", hora: "5:00 p. m.", dir: "Fracc. Carrizal, Villahermosa, Tabasco", mapa: "Parroquia de San Rafael, Fracc. Carrizal, Villahermosa, Tabasco" },
-  recepcion: { lugar: "Salón de Eventos Fun City", hora: "7:00 p. m.", dir: "", mapa: "Salón de Eventos Fun City, Villahermosa, Tabasco" },
-  vestimenta: "Etiqueta. Se reserva el color azul marino para la quinceañera.",
+  fecha: "2026-12-28T19:00:00",          // fecha y hora de la ceremonia (AAAA-MM-DDTHH:MM)
+  ceremonia: { lugar: "Parroquia de San Rafael", hora: "7:00 p. m.", dir: "Fracc. Carrizal, Villahermosa, Tabasco", mapa: "Parroquia de San Rafael, Fracc. Carrizal, Villahermosa, Tabasco" },
+  recepcion: { lugar: "Salón de Eventos Fun City", hora: "8:00 p. m.", dir: "", mapa: "Salón de Eventos Fun City, Villahermosa, Tabasco" },
+  vestimenta: "Etiqueta. Se reserva el color rosa para la quinceañera.",
   whatsapp: "9931328555",               // 10 dígitos; se agrega el 52 de México solo
-  apiRsvp: "https://script.google.com/macros/s/AKfycbwThljD5Ip2dqJAfB4xc8or2h-CUBOSNHzIS63uHouoj6oPVs_l96Ln3UZZqiuqQm7f/exec",                           // URL de tu Apps Script (termina en /exec); guarda las confirmaciones en tu hoja
+  apiRsvp: "",                           // URL de tu Apps Script (termina en /exec); guarda las confirmaciones en tu hoja
   formulario: "",                        // enlace de tu Google Form (pégalo entre las comillas)
   aviso: "Les agradecemos que mantengan a los niños sentados y bajo su supervisión durante toda la fiesta.",
   portada: "fotos/foto1.jpg",            // foto de la portada ("" para dejarla sin foto)
@@ -284,7 +285,7 @@ const D = {
   fotoCeremonia: "imagenes/ceremonia-religiosa.jpg",   // foto bajo el título Ceremonia religiosa ("" = sin foto)
   fotoRecepcion: "imagenes/comida.jpg",                // foto bajo el título Recepción ("" = sin foto)
   frase: "Los mejores momentos de la vida son los que se comparten con quienes más amamos.",
-  padrinos: [{a:"Marisela Gómez Priego"}],                          // opcional. Ej.: [{a:"Nombre madrina", b:"Nombre padrino"}]
+  padrinos: [],                          // opcional. Ej.: [{a:"Nombre madrina", b:"Nombre padrino"}]
   extras: [],                            // opcional. Ej.: [{hora:"10:00 p. m.", txt:"Vals"}]
   fin: "",                               // hora de fin del evento (opcional)
   album: ""                              // enlace del álbum de fotos (opcional)
@@ -339,7 +340,7 @@ const F=(D.fotos||[]).filter(Boolean);
 if(F.length){const h=$('hero'),t=new Image();t.onload=()=>{h.style.backgroundImage='url("'+F[0]+'")';h.classList.add('con-foto')};t.src=F[0]}
 document.querySelectorAll('.banda').forEach((b,i)=>{const src=(D.bandas||[])[i];if(src){b.style.backgroundImage='url("'+src+'")'}else{b.remove()}});
 [['fotoCer',D.fotoCeremonia],['fotoRec',D.fotoRecepcion]].forEach(([id,src])=>{const el=$(id);if(src){el.src=src;el.onerror=()=>el.remove()}else{el.remove()}});
-if(D.padrinos&&D.padrinos.length){$('padrinos').innerHTML='<h2 class="tit" style="margin-top:2.5rem"><img src="imagenes/titulo-velacion.webp" alt="Velación" style="--sw:707"></h2>'+D.padrinos.map(p=>'<p class="par"><b>'+p.a+'</b>'+(p.b?'<span>&amp;</span><b>'+p.b+'</b>':'')+'</p>').join('')}
+if(D.padrinos&&D.padrinos.length){$('padrinos').innerHTML='<p class="madr">Madrina de</p><h2 class="tit" style="margin-top:.2rem"><img src="imagenes/titulo-velacion.webp" alt="Madrina de Velación" style="--sw:707"></h2>'+D.padrinos.map(p=>'<p class="par"><b>'+p.a+'</b>'+(p.b?'<span>&amp;</span><b>'+p.b+'</b>':'')+'</p>').join('')}
 const it=[{h:D.ceremonia.hora,t:'Ceremonia'},{h:D.recepcion.hora,t:'Recepción'}].concat((D.extras||[]).map(x=>({h:x.hora,t:x.txt})));
 if(D.fin)it.push({h:D.fin,t:'Fin del evento'});
 $('tl').innerHTML=it.map(x=>'<li><b>'+x.h+'</b>'+x.t+'</li>').join('');
