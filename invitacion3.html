@@ -421,9 +421,23 @@ function tick(){let s=Math.max(0,Math.floor((f-new Date())/1000));
   document.querySelectorAll('#count strong').forEach((e,i)=>e.textContent=String(v[i]).padStart(2,'0'))}
 tick();setInterval(tick,1000);
 const a=$('audio'),b=$('musica');
-if(D.musica){a.src=D.musica;b.onclick=()=>{if(a.paused){a.play().catch(()=>{});b.textContent='❚❚';b.classList.add('on')}else{a.pause();b.textContent='♪';b.classList.remove('on')}}}else{b.remove()}
-const rv=document.querySelectorAll('.rv');
-if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});rv.forEach(x=>io.observe(x))}else{rv.forEach(x=>x.classList.add('in'))}
+if(D.musica){
+  a.src=D.musica;
+  const playMusic=()=>{
+    a.play().then(()=>{
+      b.textContent='❚❚ Pausar música';
+      ['click','touchstart'].forEach(e=>document.removeEventListener(e,playMusic));
+    }).catch(()=>{});
+  };
+  b.onclick=(e)=>{
+    e.stopPropagation();
+    if(a.paused){playMusic()}else{a.pause();b.textContent='♪ Reproducir música'}
+  };
+  playMusic(); // 1. Intenta reproducir al abrir (funciona en PC)
+  ['click','touchstart'].forEach(e=>document.addEventListener(e,playMusic)); // 2. En celular, arranca en cuanto toquen o deslicen la pantalla
+}else{
+  b.onclick=()=>{b.textContent='Falta agregar la canción'}
+}
 </script>
 </body>
 </html>
