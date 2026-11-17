@@ -108,6 +108,8 @@ dialog legend{padding:0;font-size:1.05rem}
 /* Pantalla de entrada (inicia la música al primer toque) */
 .intro{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;text-align:center;background:radial-gradient(ellipse at 20% 10%,var(--soft),transparent 55%),radial-gradient(ellipse at 90% 90%,var(--soft),transparent 50%),var(--bg);transition:opacity .9s ease,visibility .9s;text-shadow:none}
 .intro.off{opacity:0;visibility:hidden;pointer-events:none}
+.intro.foto{justify-content:flex-end;padding-bottom:max(2.5rem,12svh);background-size:cover;background-position:center top;background-repeat:no-repeat}
+.intro.foto .i-xv,.intro.foto .i-nom,.intro.foto .i-nota{text-shadow:0 2px 18px rgba(8,14,32,.85)}
 .i-xv{font-family:'Pinyon Script','Snell Roundhand',cursive;font-size:clamp(6rem,30vw,10rem);line-height:.9;color:var(--rose);margin:0}
 .i-nom{font-family:'Pinyon Script','Snell Roundhand',cursive;font-size:clamp(2rem,9vw,3rem);line-height:1.2;margin:.4rem 0 2rem}
 #abrirInv{font-size:1.2rem;padding:.8rem 2rem;box-shadow:0 0 0 0 rgba(224,190,114,.5);animation:latido 2s ease-out infinite}
@@ -247,7 +249,7 @@ const D = {
   whatsapp: "9931328555",               // 10 dígitos; se agrega el 52 de México solo
   apiRsvp: "https://script.google.com/macros/s/AKfycbwThljD5Ip2dqJAfB4xc8or2h-CUBOSNHzIS63uHouoj6oPVs_l96Ln3UZZqiuqQm7f/exec",                           // URL de tu Apps Script (termina en /exec); guarda las confirmaciones en tu hoja
   formulario: "",                        // enlace de tu Google Form (pégalo entre las comillas)
-  aviso: "",
+  aviso: "Les agradecemos que mantengan a los niños sentados y bajo su supervisión durante toda la fiesta.",
   portada: "fotos/portada.jpg",            // foto de la portada ("" para dejarla sin foto)
   fotos: ["fotos/foto1.jpg","fotos/foto2.jpg","fotos/foto3.jpg","fotos/foto4.jpg"],   // galería "Momentos"
   imgVestimenta: "",                     // foto para vestimenta; vacío = dibujo
@@ -333,6 +335,7 @@ function sonando(){b.textContent='❚❚ Pausar música'}
 if(!D.musica){intro.remove()}
 else{
   $('iNom').textContent=D.nombre;document.body.style.overflow='hidden';a.preload='auto';
+  if(D.portada){const t=new Image();t.onload=()=>{intro.style.backgroundImage='linear-gradient(to bottom,rgba(20,33,61,.1) 0%,rgba(20,33,61,.05) 30%,rgba(20,33,61,.7) 60%,#14213d 100%),url("'+D.portada+'")';intro.classList.add('foto')};t.src=D.portada}
   a.play().then(()=>{sonando();entrar()}).catch(()=>{});
   $('abrirInv').onclick=()=>{a.play().then(sonando).catch(()=>{});entrar()};
 }
