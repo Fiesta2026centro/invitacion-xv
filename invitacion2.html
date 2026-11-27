@@ -150,6 +150,35 @@ dialog legend{padding:0;font-size:1.05rem}
 .limite{font-size:1.6rem;color:var(--gold);font-weight:600;margin:.6rem 0 0}
 .vest{display:flex;justify-content:center;align-items:flex-end;gap:clamp(1.6rem,9vw,3rem);margin:0 auto 1.2rem}
 .vest img{height:clamp(230px,62vw,320px);width:auto;display:block;filter:drop-shadow(0 0 3px rgba(12,22,48,.9)) drop-shadow(0 0 10px rgba(12,22,48,.7))}
+.hero .para{font-style:italic;font-size:1.35rem;margin:.9rem 0 0;color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.7)}
+.ticket{position:relative;max-width:340px;margin:1.8rem auto 0;filter:drop-shadow(0 16px 22px rgba(0,0,0,.5));text-align:center;text-shadow:none}
+.tk-top,.tk-bot{position:relative;background:linear-gradient(160deg,#27407a,#1a2a52);padding:1.7rem 1.4rem}
+.tk-top{border-radius:16px 16px 0 0;-webkit-mask:radial-gradient(circle 14px at 0 100%,#0000 97%,#000) left/51% 100% no-repeat,radial-gradient(circle 14px at 100% 100%,#0000 97%,#000) right/51% 100% no-repeat;mask:radial-gradient(circle 14px at 0 100%,#0000 97%,#000) left/51% 100% no-repeat,radial-gradient(circle 14px at 100% 100%,#0000 97%,#000) right/51% 100% no-repeat}
+.tk-bot{border-radius:0 0 16px 16px;padding-top:1.3rem;-webkit-mask:radial-gradient(circle 14px at 0 0,#0000 97%,#000) left/51% 100% no-repeat,radial-gradient(circle 14px at 100% 0,#0000 97%,#000) right/51% 100% no-repeat;mask:radial-gradient(circle 14px at 0 0,#0000 97%,#000) left/51% 100% no-repeat,radial-gradient(circle 14px at 100% 0,#0000 97%,#000) right/51% 100% no-repeat}
+.tk-top::before{content:"";position:absolute;inset:9px 9px 0;border:1px solid rgba(224,190,114,.55);border-bottom:0;border-radius:10px 10px 0 0;pointer-events:none}
+.tk-bot::before{content:"";position:absolute;left:20px;right:20px;top:0;border-top:2px dashed rgba(224,190,114,.7)}
+.ticket p{margin:0}
+.tk-k{letter-spacing:.35em;padding-left:.35em;font-size:.95rem;color:var(--gold);text-transform:uppercase}
+.tk-t{font-family:'Pinyon Script',cursive;font-size:3.1rem;line-height:1.1;color:var(--title);font-weight:400;margin-top:.2rem!important}
+.tk-e{font-size:.85rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;margin:.2rem 0 1.1rem!important}
+.tk-l{font-style:italic;font-size:1rem}
+.tk-g{font-size:1.9rem;line-height:1.15;font-weight:600;margin:.1rem 0 1rem!important;overflow-wrap:anywhere}
+.tk-p{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;width:6.4rem;height:6.4rem;border-radius:50%;border:2px solid var(--gold);margin:.1rem 0 1rem}
+.tk-p b{font-size:2.7rem;line-height:1;color:var(--gold)}
+.tk-p span{font-size:.85rem;letter-spacing:.12em;text-transform:uppercase}
+.tk-d{font-size:1.25rem;color:var(--title);margin-bottom:.4rem!important}
+.tk-w{font-size:1.05rem}
+.tk-bar{height:46px;color:#fff;margin:0 auto .6rem;max-width:230px}
+.tk-bar svg{width:100%;height:100%;display:block}
+.tk-f{letter-spacing:.2em;font-size:1rem}
+.tk-f b{color:var(--gold)}
+.tk-s{font-size:.95rem;font-style:italic;opacity:.85;margin-top:.3rem!important}
+.sello{display:inline-block;margin-top:.9rem!important;transform:rotate(-3deg);border:3px double var(--gold);color:var(--gold);background:rgba(20,33,61,.5);padding:.2rem .9rem;font-size:1.4rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600}
+.sello[hidden]{display:none}
+.bad{background:var(--panel);border:1px solid var(--gold);border-radius:12px;padding:1.2rem}
+#ticket[hidden]{display:none}
+.btn{text-shadow:none}
+.bend{font-size:1.5rem;line-height:1.8;margin:.8rem 0 1.6rem}
 .cn{font-family:'Pinyon Script','Snell Roundhand',cursive;font-size:clamp(2.2rem,9vw,3.2rem);line-height:1.2;color:var(--title);margin:1.2rem 0 0}
 </style>
 </head>
@@ -168,6 +197,7 @@ dialog legend{padding:0;font-size:1.05rem}
   <p class="anos">AÑOS</p>
   <p class="nombre" id="nombre"></p>
   <p class="fh" id="fh"></p>
+  <p class="para" id="para"></p>
   <p class="hint">Desliza para ver la invitación</p>
 </header>
 <button type="button" class="fab" id="musica" aria-label="Música">♪</button>
@@ -180,7 +210,7 @@ dialog legend{padding:0;font-size:1.05rem}
 
 <section class="s-acuarela rv">
   <h2 class="tit"><img src="imagenes/titulo-padres.webp" alt="Padres" style="--sw:647"></h2>
-  <p class="sub">Con la bendición de Dios y de mis padres</p>
+  <p class="sub bend">Con la bendición de Dios<br>y de mis padres</p>
   <p class="par"><b id="madre"></b><span>&amp;</span><b id="padre"></b></p>
   <div id="padrinos"></div>
 </section>
@@ -239,10 +269,29 @@ dialog legend{padding:0;font-size:1.05rem}
 
 <section class="s-flores rv">
   <h2 class="tit"><img src="imagenes/titulo-confirma-asistencia.webp" alt="Confirma tu asistencia" style="--sw:2013"></h2>
-  <div class="media"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/></svg></div>
+  <div class="media" id="mConf"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/></svg></div>
   <p>Tu presencia es muy importante para mi. Por favor confirma tu asistencia para compartir juntos este día tan especial.</p>
   <p class="limite" id="limite"></p>
-  <p style="margin-top:1.2rem"><a class="btn" id="confirmar" target="_blank" rel="noopener">Confirmar asistencia</a></p>
+  <div class="ticket" id="ticket" hidden>
+    <div class="tk-top">
+      <p class="tk-k">Pase de entrada</p>
+      <p class="tk-t">Mis XV Años</p>
+      <p class="tk-e" id="tkNom"></p>
+      <p class="tk-l">Invitado(a)</p>
+      <p class="tk-g" id="tkGuest"></p>
+      <div class="tk-p"><b id="tkN"></b><span id="tkPl"></span></div>
+      <p class="tk-d" id="tkFecha"></p>
+      <p class="tk-w" id="tkCer"></p>
+      <p class="tk-w" id="tkRec"></p>
+      <p class="sello" id="sello" hidden></p>
+    </div>
+    <div class="tk-bot">
+      <div class="tk-bar" id="tkBar"></div>
+      <p class="tk-f">Folio <b id="tkFolio"></b></p>
+      <p class="tk-s">Presenta este pase en la entrada</p>
+    </div>
+  </div>
+  <p style="margin-top:1.6rem"><a class="btn" id="confirmar" target="_blank" rel="noopener">Confirmar asistencia</a></p>
   <p id="wa" style="margin-top:1.1rem;font-size:1.05rem"><a id="waLink" target="_blank" rel="noopener" style="color:inherit">¿Dudas? Escríbenos por WhatsApp</a></p>
 </section>
 
@@ -267,6 +316,10 @@ dialog legend{padding:0;font-size:1.05rem}
         <label><input type="radio" name="asistencia" value="No podremos asistir"> No podremos asistir</label>
       </div>
     </fieldset>
+    <div id="bloquePers" hidden>
+      <label for="personas">¿Cuántas personas asistirán? (máximo <span id="maxP"></span>)</label>
+      <select id="personas" name="personas"></select>
+    </div>
     <label for="mensaje">Mensaje para la quinceañera (opcional)</label>
     <textarea id="mensaje" name="mensaje" rows="2"></textarea>
     <input class="hp" type="text" name="web" tabindex="-1" autocomplete="off" aria-hidden="true">
@@ -303,6 +356,7 @@ const D = {
   fotoRecepcion: "imagenes/comida.jpg",                // foto bajo el título Recepción ("" = sin foto)
   vestimentaTipo: "Formal",                // palabra grande bajo el código de vestimenta ("" = no se muestra)
   limite: "Antes del 18 de Diciembre",     // fecha límite para confirmar ("" = no se muestra)
+  clave: "xv-mariana-2026",                // clave para firmar los enlaces; debe ser igual en generador.html
   frase: "Hay momentos que se guardan para siempre en el corazón. Hoy comienza para mi una nueva etapa llena de sueños, ilusiones y nuevas experiencias. Quiero compartir contigo la alegría de celebrar mis XV años.",
   padrinos: [{a:"Marisela Gómez Priego"}],                          // opcional. Ej.: [{a:"Nombre madrina", b:"Nombre padrino"}]
   album: ""                              // enlace del álbum de fotos (opcional)
@@ -328,7 +382,7 @@ const w=$('confirmar');
 let n=(D.whatsapp||'').replace(/\D/g,'');if(n.length===10)n='52'+n;
 const wa=n?'https://wa.me/'+n+'?text='+encodeURIComponent('Hola, tengo una duda sobre los XV años de '+D.nombre+'.'):'';
 const dlg=$('dlg'),frm=$('frm'),st=$('st');
-function abrir(){frm.hidden=false;$('gracias').hidden=true;st.textContent='';
+function abrir(){frm.hidden=false;$('gracias').hidden=true;st.textContent='';if(G.pers){if(!frm.invitados.value)frm.invitados.value=G.nombre;if(!frm.asistencia.value){sel.value=G.pases;$('bloquePers').hidden=false;sel.required=true}}
   if(dlg.showModal){dlg.showModal()}else{dlg.setAttribute('open','')}}
 function cerrar(){if(dlg.close){dlg.close()}else{dlg.removeAttribute('open')}}
 if(D.apiRsvp||D.formulario){
@@ -345,16 +399,41 @@ frm.addEventListener('submit',async e=>{
   e.preventDefault();if(frm.web.value)return;
   const btn=$('enviar');btn.disabled=true;btn.textContent='Enviando…';st.textContent='';
   const fd=new URLSearchParams(new FormData(frm));
-  const no=fd.get('asistencia')==='No podremos asistir';
+  const no=fd.get('asistencia')==='No podremos asistir';if(G.pers){fd.set('folio',G.folio);fd.set('pases',G.pases);fd.set('invitado',G.nombre);if(no)fd.set('personas','0')}
   try{
     const r=await fetch(D.apiRsvp,{method:'POST',body:fd});
     const j=await r.json();if(!j.ok)throw new Error(j.error||'error');
     $('grTxt').textContent=no?'Lamentamos que no puedan acompañarnos. Gracias por avisarnos.':'Tu confirmación quedó registrada. ¡Los esperamos!';
-    frm.hidden=true;$('gracias').hidden=false;frm.reset();
+    frm.hidden=true;$('gracias').hidden=false;frm.reset();if(G.pers)marcar(no?'no':'si');
   }catch(err){
     st.textContent='No se pudo enviar. Revisa tu conexión e inténtalo de nuevo, o escríbenos por WhatsApp.';
   }
   btn.disabled=false;btn.textContent='Enviar confirmación'});
+function h53(s){let h1=0xdeadbeef,h2=0x41c6ce57;for(let i=0,c;i<s.length;i++){c=s.charCodeAt(i);h1=Math.imul(h1^c,2654435761);h2=Math.imul(h2^c,1597334677)}h1=Math.imul(h1^(h1>>>16),2246822507)^Math.imul(h2^(h2>>>13),3266489909);h2=Math.imul(h2^(h2>>>16),2246822507)^Math.imul(h1^(h1>>>13),3266489909);return 4294967296*(2097151&h2)+(h1>>>0)}
+const firma=(n,p)=>h53(n+'|'+p+'|'+D.clave).toString(36).slice(0,6);
+function barras(seed){let x=(h53(seed)>>>0)||7,r='',px=0;for(let i=0;i<60;i++){x=(Math.imul(x,1664525)+1013904223)>>>0;const w=1+(x>>>28)%3;if(i%2===0)r+='<rect x="'+px+'" width="'+w+'" height="40"/>';px+=w}return '<svg viewBox="0 0 '+px+' 40" preserveAspectRatio="none" aria-hidden="true" fill="currentColor">'+r+'</svg>'}
+/* Enlace personalizado (?n=Nombre&p=personas&k=firma): muestra el pase. Sin enlace personalizado, la invitación es la normal. */
+const q=new URLSearchParams(location.search);
+const qn=(q.get('n')||'').trim(),qp=parseInt(q.get('p'),10),qk=q.get('k')||'';
+const kk=firma(qn,qp);
+const G=(!q.has('n')&&!q.has('p'))?{ok:true,pers:false}:{pers:true,ok:!!qn&&qp>0&&qk===kk,nombre:qn,pases:qp,folio:'XV-'+kk.toUpperCase()};
+const sel=$('personas');
+function marcar(v){const t=$('sello');t.textContent=v==='no'?'No asistirá':'Confirmado';t.hidden=false;$('confirmar').textContent='Modificar respuesta';try{localStorage.setItem('xv_'+G.folio,v)}catch(e){}}
+if(G.pers&&G.ok){
+  const nb=t=>t.replace(/([ap])\. m\./g,'$1.\u00a0m.');
+  $('ticket').hidden=false;$('mConf').style.display='none';
+  $('tkNom').textContent=D.nombre;$('tkGuest').textContent=G.nombre;$('tkN').textContent=G.pases;$('tkPl').textContent=G.pases===1?'persona':'personas';
+  $('tkFecha').textContent=nb(cuando+' · '+D.ceremonia.hora);
+  $('tkCer').textContent='Ceremonia: '+D.ceremonia.lugar;$('tkRec').textContent=nb('Recepción: '+D.recepcion.lugar+' · '+D.recepcion.hora);
+  $('tkFolio').textContent=G.folio;$('tkBar').innerHTML=barras(G.folio);$('maxP').textContent=G.pases;
+  for(let i=1;i<=G.pases;i++){sel.add(new Option(i,i))}sel.value=G.pases;
+  $('para').textContent='Invitación para '+G.nombre;
+  frm.addEventListener('change',()=>{const no=frm.asistencia.value==='No podremos asistir';$('bloquePers').hidden=no;sel.required=!no});
+  try{const v=localStorage.getItem('xv_'+G.folio);if(v)marcar(v)}catch(e){}
+}else if(!G.ok){
+  $('ticket').hidden=false;$('ticket').innerHTML='<p class="bad">Este enlace no es válido. Pide tu invitación personalizada a los anfitriones.</p>';
+  $('confirmar').remove();
+}
 const F=(D.fotos||[]).filter(Boolean);
 if(F.length){const h=$('hero'),t=new Image();t.onload=()=>{h.style.backgroundImage='url("'+F[0]+'")';h.classList.add('con-foto')};t.src=F[0]}
 document.querySelectorAll('.banda').forEach((b,i)=>{const src=(D.bandas||[])[i];if(src){b.style.backgroundImage='url("'+src+'")'}else{b.remove()}});
