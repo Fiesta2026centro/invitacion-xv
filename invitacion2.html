@@ -166,6 +166,9 @@ dialog legend{padding:0;font-size:1.05rem}
 .tk-p{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;width:6.4rem;height:6.4rem;border-radius:50%;border:2px solid var(--gold);margin:.1rem 0 1rem}
 .tk-p b{font-size:2.7rem;line-height:1;color:var(--gold)}
 .tk-p span{font-size:.85rem;letter-spacing:.12em;text-transform:uppercase}
+.tk-p.solo{width:auto;height:auto;border-radius:999px;padding:.7rem 2rem;margin-bottom:1.2rem}
+.tk-p.solo b{font-size:1.5rem;letter-spacing:.18em;text-transform:uppercase;line-height:1.1;padding-left:.18em}
+.tk-p.solo span{display:none}
 .tk-d{font-size:1.25rem;color:var(--title);margin-bottom:.4rem!important}
 .tk-w{font-size:1.05rem}
 .tk-bar{height:46px;color:#fff;margin:0 auto .6rem;max-width:230px}
@@ -279,7 +282,7 @@ dialog legend{padding:0;font-size:1.05rem}
       <p class="tk-e" id="tkNom"></p>
       <p class="tk-l">Invitado(a)</p>
       <p class="tk-g" id="tkGuest"></p>
-      <div class="tk-p"><b id="tkN"></b><span id="tkPl"></span></div>
+      <div class="tk-p" id="tkP"><b id="tkN"></b><span id="tkPl"></span></div>
       <p class="tk-d" id="tkFecha"></p>
       <p class="tk-w" id="tkCer"></p>
       <p class="tk-w" id="tkRec"></p>
@@ -355,7 +358,7 @@ const D = {
   fotoCeremonia: "imagenes/ceremonia-religiosa.jpg",   // foto bajo el título Ceremonia religiosa ("" = sin foto)
   fotoRecepcion: "imagenes/comida.jpg",                // foto bajo el título Recepción ("" = sin foto)
   vestimentaTipo: "Formal",                // palabra grande bajo el código de vestimenta ("" = no se muestra)
-  limite: "Antes del 18 de Diciembre",     // fecha límite para confirmar ("" = no se muestra)
+  limite: "Antes del 15 de Diciembre",     // fecha límite para confirmar ("" = no se muestra)
   clave: "xv-mariana-2026",                // clave para firmar los enlaces; debe ser igual en generador.html
   frase: "Hay momentos que se guardan para siempre en el corazón. Hoy comienza para mi una nueva etapa llena de sueños, ilusiones y nuevas experiencias. Quiero compartir contigo la alegría de celebrar mis XV años.",
   padrinos: [{a:"Marisela Gómez Priego"}],                          // opcional. Ej.: [{a:"Nombre madrina", b:"Nombre padrino"}]
@@ -382,7 +385,7 @@ const w=$('confirmar');
 let n=(D.whatsapp||'').replace(/\D/g,'');if(n.length===10)n='52'+n;
 const wa=n?'https://wa.me/'+n+'?text='+encodeURIComponent('Hola, tengo una duda sobre los XV años de '+D.nombre+'.'):'';
 const dlg=$('dlg'),frm=$('frm'),st=$('st');
-function abrir(){frm.hidden=false;$('gracias').hidden=true;st.textContent='';if(G.pers){if(!frm.invitados.value)frm.invitados.value=G.nombre;if(!frm.asistencia.value){sel.value=G.pases;$('bloquePers').hidden=false;sel.required=true}}
+function abrir(){frm.hidden=false;$('gracias').hidden=true;st.textContent='';if(G.pers){if(!frm.invitados.value)frm.invitados.value=G.nombre;if(!frm.asistencia.value){sel.value=G.pases;$('bloquePers').hidden=G.pases===1;sel.required=true}}
   if(dlg.showModal){dlg.showModal()}else{dlg.setAttribute('open','')}}
 function cerrar(){if(dlg.close){dlg.close()}else{dlg.removeAttribute('open')}}
 if(D.apiRsvp||D.formulario){
@@ -422,13 +425,13 @@ function marcar(v){const t=$('sello');t.textContent=v==='no'?'No asistirá':'Con
 if(G.pers&&G.ok){
   const nb=t=>t.replace(/([ap])\. m\./g,'$1.\u00a0m.');
   $('ticket').hidden=false;$('mConf').style.display='none';
-  $('tkNom').textContent=D.nombre;$('tkGuest').textContent=G.nombre;$('tkN').textContent=G.pases;$('tkPl').textContent=G.pases===1?'persona':'personas';
+  $('tkNom').textContent=D.nombre;$('tkGuest').textContent=G.nombre;if(G.pases===1){$('tkP').classList.add('solo');$('tkN').textContent='Personal'}else{$('tkN').textContent=G.pases;$('tkPl').textContent='personas'}
   $('tkFecha').textContent=nb(cuando+' · '+D.ceremonia.hora);
   $('tkCer').textContent='Ceremonia: '+D.ceremonia.lugar;$('tkRec').textContent=nb('Recepción: '+D.recepcion.lugar+' · '+D.recepcion.hora);
   $('tkFolio').textContent=G.folio;$('tkBar').innerHTML=barras(G.folio);$('maxP').textContent=G.pases;
   for(let i=1;i<=G.pases;i++){sel.add(new Option(i,i))}sel.value=G.pases;
   $('para').textContent='Invitación para '+G.nombre;
-  frm.addEventListener('change',()=>{const no=frm.asistencia.value==='No podremos asistir';$('bloquePers').hidden=no;sel.required=!no});
+  frm.addEventListener('change',()=>{const no=frm.asistencia.value==='No podremos asistir';$('bloquePers').hidden=no||G.pases===1;sel.required=!no});
   try{const v=localStorage.getItem('xv_'+G.folio);if(v)marcar(v)}catch(e){}
 }else if(!G.ok){
   $('ticket').hidden=false;$('ticket').innerHTML='<p class="bad">Este enlace no es válido. Pide tu invitación personalizada a los anfitriones.</p>';
