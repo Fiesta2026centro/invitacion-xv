@@ -148,6 +148,8 @@ dialog legend{padding:0;font-size:1.05rem}
 .madr{font-style:italic;font-size:2rem;line-height:1.2;letter-spacing:.04em;color:var(--title);margin:2.6rem 0 0}
 .tipo{font-size:2rem;letter-spacing:.3em;padding-left:.3em;text-transform:uppercase;color:var(--gold);font-weight:600;margin:.2rem 0 .8rem}
 .limite{font-size:1.6rem;color:var(--gold);font-weight:600;margin:.6rem 0 0}
+.vest{display:flex;justify-content:center;align-items:flex-end;gap:clamp(1.6rem,9vw,3rem);margin:0 auto 1.2rem}
+.vest img{height:clamp(230px,62vw,320px);width:auto;display:block;filter:drop-shadow(0 0 3px rgba(12,22,48,.9)) drop-shadow(0 0 10px rgba(12,22,48,.7))}
 .cn{font-family:'Pinyon Script','Snell Roundhand',cursive;font-size:clamp(2.2rem,9vw,3.2rem);line-height:1.2;color:var(--title);margin:1.2rem 0 0}
 </style>
 </head>
@@ -223,7 +225,7 @@ dialog legend{padding:0;font-size:1.05rem}
 
 <section class="s-ramas rv">
   <h2 class="tit"><img src="imagenes/titulo-codigo-de-vestimenta.webp" alt="Código de vestimenta" style="--sw:1811"></h2>
-  <div class="media"><svg viewBox="0 0 24 24"><path d="M9 2l3 3 3-3 .5 6L14 12l4 10H6l4-10-1.5-4z"/></svg><svg viewBox="0 0 24 24"><path d="M8 3l4 4 4-4 4 3-2 5-2-1v11H8V10l-2 1-2-5z"/></svg></div>
+  <div class="vest"><img src="imagenes/vestimenta-mujer.webp" alt="Mujer: vestido largo"><img src="imagenes/vestimenta-hombre.webp" alt="Hombre: traje"></div>
   <p class="tipo" id="vestTipo"></p>
   <p id="vestimenta"></p>
 </section>
@@ -292,7 +294,7 @@ const D = {
   formulario: "",                        // enlace de tu Google Form (pégalo entre las comillas)
   portada: "fotos/foto1.jpg",            // foto de la portada ("" para dejarla sin foto)
   fotos: ["fotos/portada.jpg"],            // foto de la portada (la primera de la lista)
-  imgVestimenta: "imagenes/vestimenta-hombre.webp",                     // foto para vestimenta; vacío = dibujo
+  imgVestimenta: "",                     // foto para vestimenta; vacío = dibujo
   imgSobres: "",                         // foto para lluvia de sobres; vacío = dibujo
   imgConfirmar: "",                      // foto para confirmar asistencia; vacío = dibujo
   musica: "musica.mp3",
